@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://serviciosmr94-star.github.io/sitemap.xml
