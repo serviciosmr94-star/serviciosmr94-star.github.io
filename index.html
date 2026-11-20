@@ -290,7 +290,11 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <span class="k">Diagnóstico Express</span>
           <h2>¿Tu tablero está seguro? Lo revisamos en una visita.</h2>
           <p>Ideal antes de una auditoría, una mudanza o si saltan los automáticos. Te entregamos un informe con lo que encontramos y qué corregir primero.</p>
-          <a class="btn btn-wa js-wa" href="#contacto" data-msg="Hola, quiero agendar un Diagnóstico Express de mi tablero.">Agendar Diagnóstico Express</a>
+          <div class="ctas">
+            <a class="btn btn-wa" id="btnAgenda" href="#contacto" hidden>Agendar y pagar en línea</a>
+            <a class="btn btn-wa js-wa" href="#contacto" data-msg="Hola, quiero agendar un Diagnóstico Express de mi tablero.">Agendar por WhatsApp</a>
+          </div>
+          <p class="fuera" id="agendaNota" hidden>Eliges día y hora, pagas con Mercado Pago y la visita queda confirmada.</p>
         </div>
         <div>
           <ol>
@@ -324,15 +328,18 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 
   <section class="s contacto" id="contacto">
     <div class="in">
-      <div class="sh"><span class="k">Contacto</span><h2>Cuéntanos qué necesitas</h2><p>Completa los datos y se abre WhatsApp con tu mensaje listo para enviar. Respondemos en horario hábil.</p></div>
+      <div class="sh"><span class="k">Contacto</span><h2>Cuéntanos qué necesitas</h2><p>Déjanos tus datos y te contactamos con la cotización. También se abre WhatsApp con tu mensaje listo. Respondemos en horario hábil.</p></div>
       <div class="cgrid">
         <form class="cot" id="cot" novalidate>
           <label for="cNom">Nombre<input id="cNom" autocomplete="name" required></label>
           <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization"></label>
+          <label for="cTel">Teléfono o WhatsApp<input id="cTel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 ..."></label>
+          <label for="cMail">Correo (opcional)<input id="cMail" type="email" autocomplete="email"></label>
           <label for="cCom">Comuna o ciudad<input id="cCom" required></label>
           <label for="cSer">Servicio<select id="cSer"><option>Mantención de tableros</option><option>Reposición de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Compra de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y TE1</option><option>Otro</option></select></label>
           <label class="full" for="cMsg">Mensaje<textarea id="cMsg" placeholder="Ej: tablero de una bodega de 400 m², saltan los automáticos en la tarde."></textarea></label>
-          <button class="btn btn-wa full" type="submit">Enviar por WhatsApp</button>
+          <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+          <button class="btn btn-wa full" type="submit">Enviar solicitud</button>
           <p class="cmsg" id="cOut" role="status"></p>
         </form>
         <div class="cdirecto">
@@ -351,6 +358,9 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 <script>
 (function(){
   const WA = '56941531025';   // confirmado por Iván el 20-11-2026
+  const FORM = '';     // Apps Script "Formulario web MR" (termina en /exec)
+  const AGENDA = ''; // página de reservas de Google Calendar
+  if (AGENDA.indexOf('https://') === 0) { const b = document.getElementById('btnAgenda'); b.href = AGENDA; b.target = '_blank'; b.rel = 'noopener'; b.hidden = false; document.getElementById('agendaNota').hidden = false; }
   const wa = t => 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t);
   document.querySelectorAll('.js-wa').forEach(a => { a.href = wa(a.dataset.msg || 'Hola'); a.target = '_blank'; a.rel = 'noopener'; });
   // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol; equipos comerciales típicos
@@ -369,9 +379,14 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     ev.preventDefault();
     const v = id => document.getElementById(id).value.trim(), out = document.getElementById('cOut');
     if (!v('cNom') || !v('cCom')) { out.textContent = 'Escribe tu nombre y la comuna para poder cotizarte.'; return; }
+    if (!v('cTel') && !v('cMail')) { out.textContent = 'Déjanos un teléfono o un correo para responderte.'; return; }
     const t = 'Hola, soy ' + v('cNom') + (v('cEmp') ? ' de ' + v('cEmp') : '') + ', de ' + v('cCom') + '. Quiero cotizar: ' + v('cSer') + '.' + (v('cMsg') ? ' ' + v('cMsg') : '');
+    if (FORM.indexOf('https://') === 0) {
+      const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: v('cMsg'), origen: 'formulario', web_sitio: v('cWeb') });
+      fetch(FORM, { method: 'POST', mode: 'no-cors', body: datos }).catch(() => {});
+    }
     const a = document.createElement('a'); a.href = wa(t); a.target = '_blank'; a.rel = 'noopener'; document.body.append(a); a.click(); a.remove();
-    out.textContent = 'Se abrió WhatsApp con tu mensaje. Si no se abrió, escríbenos al número de la derecha.';
+    out.textContent = 'Recibimos tu solicitud y se abrió WhatsApp con tu mensaje. Si no se abrió, escríbenos al número de la derecha.';
   });
 })();
 </script>
