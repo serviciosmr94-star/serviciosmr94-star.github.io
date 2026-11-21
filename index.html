@@ -15,255 +15,284 @@
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Electrician", "name": "Servicios MR", "legalName": "Iván Patricio Morales Roldán E.I.R.L.", "telephone": "+56941531025", "address": {"@type": "PostalAddress", "addressLocality": "Pudahuel", "addressRegion": "Región Metropolitana", "addressCountry": "CL"}, "areaServed": ["Santiago", "Concepción", "Antofagasta"], "description": "Mantención eléctrica industrial, tableros, termografía e instalación y venta de aire acondicionado.", "url": "https://serviciosmr94-star.github.io/", "email": "serviciosmr94@gmail.com"}</script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
-/* Layout: plano eléctrico. Banda oscura con unilineal como portada, fichas de servicio como "circuitos" numerados por tablero, cierre con contacto directo. */
+/* Layout: ficha técnica clara. La portada ES la solicitud de cotización (formulario a la vista), luego servicios como fichas, Diagnóstico Express con precio y agenda, preguntas frecuentes y cierre con teléfono, correo y agenda. */
 :root{
-  --ink:#0F3442;      /* azul petróleo MR */
-  --ink-2:#164A5D;
-  --turq:#3F9BBA;     /* turquesa del logo */
-  --turq-d:#246E89;
-  --mag:#D5365F;      /* magenta del rayo */
-  --bg:#F3F6F7;
+  --paper:#F6F8F9;   /* fondo gris frío */
   --card:#FFFFFF;
-  --text:#22343B;
-  --muted:#5E6F76;
-  --line:#D6E0E3;
-  --tint:#E4F1F5;
-  --on-ink:#F2F8FA;
-  --on-ink-mut:#A8C3CC;
-  --amb:#B7791F;
+  --ink:#0F3442;     /* azul petróleo MR: texto y bandas */
+  --text:#1E3038;
+  --muted:#5B6D74;
+  --line:#D9E2E5;
+  --turq:#2F8CAD;    /* turquesa del logo, un poco más profundo para leer sobre blanco */
+  --turq-soft:#E3F0F5;
+  --mag:#C92E57;     /* magenta del rayo: solo para la acción principal */
+  --ok:#2E7D5B;
+  --on-ink:#F1F7F9;
+  --on-ink-mut:#A9C2CB;
   --f-disp:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
   --f-body:"IBM Plex Sans",Arial,"Helvetica Neue",sans-serif;
   --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --ink:#07171E; --ink-2:#0D2731; --turq:#5DB4D1; --turq-d:#86CDE3; --mag:#EE5F84;
-  --bg:#0C181D; --card:#13232A; --text:#DDE8EC; --muted:#93A7AF; --line:#24383F; --tint:#16323C;
-  --on-ink:#EAF4F7; --on-ink-mut:#8FB0BC; --amb:#F0B34A; color-scheme:dark}}
+  --paper:#0D181C; --card:#142329; --ink:#081A21; --text:#DCE7EB; --muted:#93A8B0; --line:#25393F;
+  --turq:#62B6D3; --turq-soft:#17323B; --mag:#EC5D83; --ok:#5DC093; --on-ink:#EAF4F7; --on-ink-mut:#8FB0BC; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --ink:#07171E; --ink-2:#0D2731; --turq:#5DB4D1; --turq-d:#86CDE3; --mag:#EE5F84;
-  --bg:#0C181D; --card:#13232A; --text:#DDE8EC; --muted:#93A7AF; --line:#24383F; --tint:#16323C;
-  --on-ink:#EAF4F7; --on-ink-mut:#8FB0BC; --amb:#F0B34A; color-scheme:dark}
+  --paper:#0D181C; --card:#142329; --ink:#081A21; --text:#DCE7EB; --muted:#93A8B0; --line:#25393F;
+  --turq:#62B6D3; --turq-soft:#17323B; --mag:#EC5D83; --ok:#5DC093; --on-ink:#EAF4F7; --on-ink-mut:#8FB0BC; color-scheme:dark}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:80px}
-body{background:var(--bg);color:var(--text);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
-.in{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-h1,h2,h3{font-family:var(--f-disp);letter-spacing:-.005em;text-wrap:balance;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--paper);color:var(--text);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
+.in{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-disp);margin:0;text-wrap:balance;letter-spacing:-.005em}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--mag);outline-offset:3px}
-.pc{background:color-mix(in srgb,var(--amb) 22%,transparent);color:inherit;border-bottom:2px dashed var(--amb);padding:0 3px;border-radius:3px}
+.k{font:500 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--turq)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font:600 15px/1 var(--f-body);text-decoration:none;padding:14px 20px;border-radius:8px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-p{background:var(--mag);color:#fff}
+.btn-p:hover{filter:brightness(1.07)}
+.btn-s{background:transparent;border-color:var(--line);color:var(--text)}
+.btn-s:hover{border-color:var(--turq);color:var(--turq)}
 
 /* cabecera */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.08)}
-.top .in{display:flex;align-items:center;gap:20px;padding-block:10px}
-.logo{background:#fff;border-radius:8px;padding:4px 10px;display:flex;flex:none}
-.logo img{height:38px;width:auto;display:block}
-.nav{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
-.nav a{color:var(--on-ink-mut);text-decoration:none;font-weight:500;font-size:14.5px;padding:8px 12px;border-radius:999px;white-space:nowrap}
-.nav a:hover{color:var(--on-ink);background:rgba(255,255,255,.08)}
-.btn{display:inline-flex;align-items:center;gap:9px;font:600 15px/1 var(--f-body);text-decoration:none;padding:13px 20px;border-radius:10px;border:1.5px solid transparent;cursor:pointer;white-space:nowrap}
-.btn svg{width:18px;height:18px;flex:none}
-.btn-wa{background:var(--mag);color:#fff}
-.btn-wa:hover{filter:brightness(1.08)}
-.btn-ln{border-color:rgba(255,255,255,.35);color:var(--on-ink);background:transparent}
-.btn-ln:hover{border-color:var(--turq)}
-.top .btn{padding:10px 14px;font-size:14px}
-@media (max-width:860px){.nav{display:none}.top .in{justify-content:space-between}}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--card);border-bottom:1px solid var(--line)}
+.top .in{display:flex;align-items:center;gap:22px;padding-block:10px}
+.logo{display:flex;flex:none}
+.logo img{height:40px;width:auto;display:block}
+.nav{display:flex;gap:2px;flex:1;min-width:0}
+.nav a{color:var(--muted);text-decoration:none;font-weight:500;font-size:14.5px;padding:8px 11px;border-radius:6px;white-space:nowrap}
+.nav a:hover{color:var(--text);background:var(--turq-soft)}
+.tel{font:600 15px var(--f-body);text-decoration:none;color:var(--text);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.tel svg{width:17px;height:17px;color:var(--turq)}
+.top .btn{padding:10px 15px;font-size:14px}
+@media (max-width:980px){.nav{display:none}.top .in{justify-content:space-between}}
+@media (max-width:560px){.tel span{display:none}}
 
-/* portada */
-.hero{background:linear-gradient(180deg,var(--ink),var(--ink-2));color:var(--on-ink);position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
-.hero .in{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:center;padding-block:56px 52px}
-@media (max-width:900px){.hero .in{grid-template-columns:1fr;padding-block:36px 34px;gap:26px}}
-.eyebrow{font:500 12.5px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--turq);margin:0 0 14px}
-.hero h1{font-size:clamp(34px,5.4vw,58px);line-height:1.02;font-weight:700}
+/* portada: titular + solicitud */
+.hero{background:var(--card);border-bottom:1px solid var(--line)}
+.hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:48px;align-items:start;padding-block:52px 56px}
+@media (max-width:940px){.hero .in{grid-template-columns:1fr;gap:30px;padding-block:32px 36px}}
+.hero h1{font-size:clamp(36px,5.2vw,60px);line-height:1;font-weight:700;color:var(--text);margin-top:14px}
 .hero h1 em{font-style:normal;color:var(--turq)}
-.hero p.lead{color:var(--on-ink-mut);font-size:17.5px;max-width:52ch;margin:18px 0 26px}
-.ctas{display:flex;flex-wrap:wrap;gap:12px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding:0;list-style:none}
-.chips li{font:500 12.5px/1 var(--f-mono);letter-spacing:.04em;color:var(--on-ink);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 12px}
-.uni{width:100%;max-width:520px;justify-self:end;height:auto;display:block}
-.uni .w{stroke:var(--on-ink-mut);stroke-width:1.6;fill:none;stroke-linecap:round}
-.uni .wt{stroke:var(--turq);stroke-width:2.2;fill:none;stroke-linecap:round}
-.uni .bx{fill:rgba(255,255,255,.04);stroke:rgba(255,255,255,.28);stroke-width:1.2}
-.uni text{font:500 11px var(--f-mono);fill:var(--on-ink-mut);letter-spacing:.06em}
-.uni text.h{fill:var(--on-ink);font-size:12px}
-.uni .hot{fill:var(--mag)}
-.uni .flow{stroke:var(--turq);stroke-width:2.2;fill:none;stroke-dasharray:6 10;animation:fluye 2.4s linear infinite}
-@keyframes fluye{to{stroke-dashoffset:-64}}
-@media (prefers-reduced-motion:reduce){.uni .flow{animation:none}html{scroll-behavior:auto}}
-@media (max-width:900px){.uni{justify-self:center;max-width:440px}}
+.lead{font-size:18px;color:var(--muted);max-width:54ch;margin:18px 0 0}
+.pruebas{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px;max-width:560px}
+@media (max-width:480px){.pruebas{grid-template-columns:1fr}}
+.pruebas li{display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:15px;line-height:1.45}
+.pruebas svg{width:22px;height:22px;color:var(--ok);margin-top:1px}
+.pruebas b{display:block;color:var(--text)}
+.pruebas span{color:var(--muted)}
+.zonas{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.zonas span{font:500 12.5px/1 var(--f-mono);letter-spacing:.05em;padding:8px 12px;border-radius:999px;background:var(--turq-soft);color:var(--turq)}
+
+/* formulario */
+.sol{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.sol h2{font-size:26px;line-height:1.1;color:var(--text)}
+.sol p.sub{margin:-8px 0 0;color:var(--muted);font-size:14.5px}
+form.cot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+form.cot label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--muted)}
+form.cot .full{grid-column:1/-1}
+form.cot input,form.cot select,form.cot textarea{font:inherit;font-size:16px;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+form.cot input:focus,form.cot select:focus,form.cot textarea:focus{border-color:var(--turq);outline:none;box-shadow:0 0 0 3px var(--turq-soft)}
+form.cot textarea{resize:vertical;min-height:84px}
+@media (max-width:440px){form.cot{grid-template-columns:1fr}}
+.cmsg{grid-column:1/-1;margin:0;font-size:14px;color:var(--muted);min-height:1em}
+.cmsg.ok{color:var(--ok);font-weight:600}
+.priv{grid-column:1/-1;margin:0;font-size:12.5px;color:var(--muted)}
+.priv a,footer a{color:inherit}
 
 /* secciones */
-section.s{padding-block:64px}
-section.s .in{display:flex;flex-direction:column;gap:30px}
-.sh{display:flex;flex-direction:column;gap:10px;max-width:68ch}
+section.s{padding-block:68px}
+section.s>.in{display:flex;flex-direction:column;gap:30px}
+.sh{display:flex;flex-direction:column;gap:10px;max-width:66ch}
 .sh h2{font-size:clamp(28px,3.6vw,40px);font-weight:700;color:var(--text)}
 .sh p{margin:0;color:var(--muted);font-size:16.5px}
-.k{font:500 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--turq-d)}
 
-/* servicios */
-.serv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-@media (max-width:960px){.serv{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.serv{grid-template-columns:1fr}}
-.sv{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.sv .cto{display:flex;align-items:center;gap:10px;font:500 11.5px/1 var(--f-mono);letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
-.sv .cto i{font-style:normal;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;background:var(--tint);color:var(--turq-d)}
-.sv .cto i svg{width:20px;height:20px}
-.sv h3{font-size:22px;font-weight:600;line-height:1.15}
+/* servicios: fichas */
+.serv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+@media (max-width:940px){.serv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.serv{grid-template-columns:1fr}}
+.sv{background:var(--card);padding:24px 22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.sv .ic{width:40px;height:40px;border-radius:9px;display:grid;place-items:center;background:var(--turq-soft);color:var(--turq)}
+.sv .ic svg{width:22px;height:22px}
+.sv h3{font-size:22px;font-weight:600;line-height:1.15;color:var(--text)}
 .sv p{margin:0;color:var(--muted);font-size:15px}
-.sv ul{margin:0;padding-left:18px;color:var(--text);font-size:14.5px;display:flex;flex-direction:column;gap:3px}
-.sv.ac{border-color:color-mix(in srgb,var(--turq) 55%,var(--line))}
+.sv ul{margin:2px 0 0;padding-left:18px;font-size:14.5px;display:flex;flex-direction:column;gap:2px}
+.sv a{margin-top:auto;padding-top:6px;font-weight:600;font-size:14.5px;color:var(--turq);text-decoration:none}
+.sv a:hover{text-decoration:underline}
 
-/* aire acondicionado */
-.ac-band{background:var(--card);border-block:1px solid var(--line)}
-.ac-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px;align-items:start}
+/* plan de mantención */
+.plan{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:860px){.plan{grid-template-columns:1fr;padding:22px}}
+.plan h2{font-size:clamp(26px,3.2vw,36px);color:var(--text);margin:10px 0 0}
+.plan p{color:var(--muted);margin:12px 0 18px}
+.plan .nota{font-size:13.5px;margin:12px 0 0}
+
+/* aire */
+.ac-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
 @media (max-width:860px){.ac-grid{grid-template-columns:1fr}}
-.btu{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.btu{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px}
 .btu h3{font-size:21px}
-.btu label{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:600;color:var(--muted)}
-.btu input,.btu select{font:inherit;font-size:16px;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
+.btu label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.btu input,.btu select{font:inherit;font-size:16px;color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%}
 .btu .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btu output{display:block;font:700 34px/1.1 var(--f-disp);color:var(--turq-d);font-variant-numeric:tabular-nums}
+.btu output{display:block;font:700 38px/1.05 var(--f-disp);color:var(--turq);font-variant-numeric:tabular-nums}
 .btu small{color:var(--muted);font-size:13px}
-.lista{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
-.lista li{display:grid;grid-template-columns:28px 1fr;gap:12px;align-items:start}
-.lista li b{display:block}
-.lista li span{color:var(--muted);font-size:15px}
-.tick{width:28px;height:28px;border-radius:50%;background:var(--tint);color:var(--turq-d);display:grid;place-items:center}
-.tick svg{width:16px;height:16px}
+.lista{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
+.lista li{display:grid;grid-template-columns:26px 1fr;gap:12px}
+.lista svg{width:22px;height:22px;color:var(--ok);margin-top:2px}
+.lista b{display:block;color:var(--text)}
+.lista span{color:var(--muted);font-size:15px}
 
 /* diagnóstico express */
-.dx{background:linear-gradient(135deg,var(--ink),var(--ink-2));color:var(--on-ink);border-radius:16px;padding:32px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center}
+.dx{background:var(--ink);color:var(--on-ink);border-radius:16px;padding:34px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
 @media (max-width:860px){.dx{grid-template-columns:1fr;padding:24px}}
-.dx h2{font-size:clamp(28px,3.4vw,38px)}
-.dx p{color:var(--on-ink-mut);margin:10px 0 18px}
-.dx .k{color:var(--turq)}
-.dx ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:d}
-.dx li{counter-increment:d;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 14px}
-.dx li::before{content:counter(d);width:30px;height:30px;border-radius:7px;display:grid;place-items:center;font:600 14px var(--f-mono);background:var(--turq);color:#06222C}
-.dx li b{display:block;color:var(--on-ink)}
-.dx li span{font-size:14px;color:var(--on-ink-mut)}
-.dx .fuera{font-size:13.5px;color:var(--on-ink-mut);margin:14px 0 0}
-.precio{display:flex;align-items:center;gap:14px;margin:0 0 6px}
-.precio b{font:700 44px/1 var(--f-disp);color:#fff;font-variant-numeric:tabular-nums}
+.dx h2{font-size:clamp(28px,3.4vw,38px);margin-top:10px}
+.dx p{color:var(--on-ink-mut);margin:12px 0 0}
+.precio{display:flex;align-items:flex-end;gap:14px;margin:22px 0 4px}
+.precio b{font:700 52px/0.9 var(--f-disp);color:#fff;font-variant-numeric:tabular-nums}
 .precio span{font-size:14px;color:var(--on-ink-mut);line-height:1.35}
-
-/* cómo trabajamos */
-.pasos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none;counter-reset:p}
-@media (max-width:900px){.pasos{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.pasos{grid-template-columns:1fr}}
-.pasos li{counter-increment:p;border-top:3px solid var(--turq);padding-top:14px;display:flex;flex-direction:column;gap:6px}
-.pasos li::before{content:"Paso " counter(p);font:500 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--turq-d)}
-.pasos b{font:600 20px/1.2 var(--f-disp)}
-.pasos span{color:var(--muted);font-size:15px}
+.dx .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.dx .btn-s{border-color:rgba(255,255,255,.3);color:var(--on-ink)}
+.dx .btn-s:hover{border-color:#fff;color:#fff}
+.dx ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;counter-reset:d}
+.dx li{counter-increment:d;display:grid;grid-template-columns:34px 1fr;gap:12px;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:12px}
+.dx li::before{content:counter(d);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:600 14px var(--f-mono);border:1.5px solid var(--turq);color:var(--on-ink)}
+.dx li b{display:block}
+.dx li span{font-size:14px;color:var(--on-ink-mut)}
+.dx .nota{font-size:13.5px}
 
 /* respaldo */
 .datos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 @media (max-width:760px){.datos{grid-template-columns:1fr}}
-.dt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.dt{border-top:3px solid var(--turq);padding-top:14px}
 .dt b{display:block;font:700 22px/1.2 var(--f-disp);color:var(--text)}
 .dt span{color:var(--muted);font-size:15px}
-.zonas{display:flex;flex-wrap:wrap;gap:10px}
-.zonas span{font:500 14px var(--f-mono);padding:8px 14px;border-radius:999px;background:var(--tint);color:var(--turq-d)}
 
-/* contacto */
-.contacto{background:var(--ink);color:var(--on-ink)}
-.contacto .sh h2{color:var(--on-ink)}
-.contacto .sh p{color:var(--on-ink-mut)}
-.contacto .k{color:var(--turq)}
-.cgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:28px}
-@media (max-width:860px){.cgrid{grid-template-columns:1fr}}
-form.cot{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:22px}
-form.cot label{display:flex;flex-direction:column;gap:6px;font-size:13.5px;font-weight:600;color:var(--on-ink-mut)}
-form.cot .full{grid-column:1/-1}
-form.cot input,form.cot select,form.cot textarea{font:inherit;font-size:16px;color:var(--on-ink);background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:11px 12px;width:100%}
-form.cot textarea{resize:vertical;min-height:96px}
-form.cot select option{color:#111}
-@media (max-width:520px){form.cot{grid-template-columns:1fr}}
-.cmsg{grid-column:1/-1;margin:0;font-size:14px;color:var(--on-ink-mut)}
-.cdirecto{display:flex;flex-direction:column;gap:14px}
-.cd{border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:16px 18px}
-.cd span{display:block;font:500 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--on-ink-mut)}
-.cd b{display:block;font:600 21px/1.3 var(--f-disp);color:var(--on-ink);user-select:all;overflow-wrap:anywhere}
-footer{background:#081F28;color:var(--on-ink-mut);font-size:13.5px}
+/* preguntas */
+.faq{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:18px 0;font:600 19px/1.3 var(--f-disp);color:var(--text)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:500 22px/1 var(--f-mono);color:var(--turq);flex:none}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:0 0 18px;color:var(--muted);max-width:70ch}
+
+/* contacto final */
+.fin{background:var(--card);border-top:1px solid var(--line)}
+.canales{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:820px){.canales{grid-template-columns:1fr}}
+.cn{border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.cn span{font:500 12px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cn b{font:600 22px/1.25 var(--f-disp);color:var(--text);overflow-wrap:anywhere;user-select:all}
+.cn small{color:var(--muted);font-size:14px}
+.cn a{font-weight:600;font-size:14.5px;color:var(--turq);text-decoration:none;margin-top:4px}
+footer{background:var(--ink);color:var(--on-ink-mut);font-size:13.5px}
 footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:22px calc(22px + env(safe-area-inset-bottom,0px))}
-.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:20;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.28)}
-.wa-float svg{width:30px;height:30px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="in">
-    <a class="logo" href="#inicio" aria-label="Servicios MR, inicio"><img src="logo_mr.png" alt="Servicios MR, mantención eléctrica industrial" width="91" height="38"></a>
+    <a class="logo" href="#inicio" aria-label="Servicios MR, inicio"><img src="logo_mr.png" alt="Servicios MR" width="96" height="40"></a>
     <nav class="nav" aria-label="Secciones">
-      <a href="#servicios">Servicios</a><a href="#aire">Aire acondicionado</a><a href="#diagnostico">Diagnóstico Express</a><a href="#como">Cómo trabajamos</a><a href="#contacto">Contacto</a>
+      <a href="#servicios">Servicios</a><a href="#plan">Plan de mantención</a><a href="#aire">Aire acondicionado</a><a href="#diagnostico">Diagnóstico Express</a><a href="#preguntas">Preguntas</a><a href="#contacto">Contacto</a>
     </nav>
-    <a class="btn btn-wa js-wa" href="#contacto" data-msg="Hola, quiero cotizar un servicio con Servicios MR."><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.2Z"/></svg>Cotizar</a>
+    <a class="tel" href="tel:+56941531025"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>+56 9 4153 1025</span></a>
+    <a class="btn btn-p" href="#cotizar">Cotizar</a>
   </div>
 </header>
 
 <main id="inicio">
-  <section class="hero">
+  <section class="hero" id="cotizar">
     <div class="in">
       <div>
-        <p class="eyebrow">Electricidad industrial · Climatización</p>
-        <h1>Tableros que no fallan y <em>aire acondicionado</em> bien instalado.</h1>
-        <p class="lead">Mantención eléctrica preventiva y correctiva, reposición de tableros, termografía e instalación y venta de equipos de aire acondicionado. Trabajamos según los Pliegos Técnicos RIC de la SEC y entregamos informe de cada trabajo.</p>
-        <div class="ctas">
-          <a class="btn btn-wa js-wa" href="#contacto" data-msg="Hola, quiero cotizar con Servicios MR."><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>Cotizar por WhatsApp</a>
-          <a class="btn btn-ln" href="#diagnostico">Pedir Diagnóstico Express</a>
-        </div>
-        <ul class="chips" aria-label="Cobertura">
-          <li>Santiago</li><li>Concepción</li><li>Antofagasta</li><li>Normativa RIC · SEC</li>
+        <span class="k">Electricidad industrial · Climatización</span>
+        <h1>Tableros eléctricos seguros y <em>aire acondicionado</em> para tu negocio u hogar.</h1>
+        <p class="lead">Mantención eléctrica, reposición de tableros, termografía e instalación y venta de equipos de aire acondicionado. Trabajamos según los Pliegos Técnicos RIC de la SEC y cada trabajo termina con informe.</p>
+        <ul class="pruebas">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Contrato industrial vigente</b><span>Mantención para Bosch Rexroth Chile.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Cotización por escrito</b><span>Alcances, materiales y plazo claros.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Informe con fotos</b><span>Pruebas, mediciones y plano unilineal.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Declaración TE1</b><span>Con instalador autorizado SEC.</span></div></li>
         </ul>
+        <div class="zonas" aria-label="Zonas donde trabajamos"><span>Santiago · base en Pudahuel</span><span>Concepción</span><span>Antofagasta</span></div>
       </div>
-      <svg class="uni" viewBox="0 0 520 400" role="img" aria-label="Esquema unilineal de un tablero: empalme, automático general, protector diferencial y circuitos de alumbrado, enchufes y aire acondicionado">
-        <text class="h" x="24" y="28">ESQUEMA UNILINEAL · TABLERO GENERAL</text>
-        <path class="w" d="M260 50v40"/><circle class="bx" cx="260" cy="64" r="12"/><text x="282" y="68">EMPALME</text>
-        <rect class="bx" x="230" y="92" width="60" height="44" rx="6"/><path class="wt" d="M246 124l14-18 14 18"/><text x="302" y="118">AUTOMÁTICO GENERAL</text>
-        <path class="flow" d="M260 136v44"/>
-        <rect class="bx" x="230" y="180" width="60" height="40" rx="6"/><text x="246" y="205" class="h">ID</text><text x="302" y="204">PROTECTOR DIFERENCIAL</text>
-        <path class="w" d="M260 220v30M80 250h360"/>
-        <path class="flow" d="M110 250v40M260 250v40M410 250v40"/>
-        <rect class="bx" x="84" y="290" width="52" height="40" rx="6"/><rect class="bx" x="234" y="290" width="52" height="40" rx="6"/><rect class="bx" x="384" y="290" width="52" height="40" rx="6"/>
-        <path class="w" d="M110 330v26M260 330v26M410 330v26"/>
-        <text x="72" y="376">C1 ALUMBRADO</text><text x="222" y="376">C2 ENCHUFES</text><text x="380" y="376">C3 CLIMA</text>
-        <circle class="hot" cx="410" cy="310" r="5"/><text x="444" y="300">25 % DE</text><text x="444" y="314">RESERVA</text>
-      </svg>
+
+      <div class="sol">
+        <h2>Pide tu cotización</h2>
+        <p class="sub">Te respondemos dentro del día hábil, por teléfono o correo.</p>
+        <form class="cot" id="cot" novalidate>
+          <label for="cNom">Nombre<input id="cNom" autocomplete="name" required></label>
+          <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization"></label>
+          <label for="cTel">Teléfono<input id="cTel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 ..."></label>
+          <label for="cMail">Correo<input id="cMail" type="email" autocomplete="email" placeholder="tu@correo.cl"></label>
+          <label for="cCom">Comuna o ciudad<input id="cCom" required></label>
+          <label for="cSer">Servicio<select id="cSer"><option>Mantención de tableros</option><option>Plan de mantención para mi empresa</option><option>Reposición de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Compra de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y TE1</option><option>Otro</option></select></label>
+          <label class="full" for="cMsg">Cuéntanos qué necesitas<textarea id="cMsg" placeholder="Ej: tablero de una bodega de 400 m², saltan los automáticos en la tarde."></textarea></label>
+          <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+          <button class="btn btn-p full" type="submit" id="cBtn">Enviar solicitud</button>
+          <p class="cmsg" id="cOut" role="status"></p>
+          <p class="priv">Usamos tus datos solo para responder y hacer seguimiento a tu solicitud. <a href="privacidad.html">Aviso de privacidad</a>.</p>
+        </form>
+      </div>
     </div>
   </section>
 
   <section class="s" id="servicios">
     <div class="in">
-      <div class="sh"><span class="k">Servicios</span><h2>Lo que hacemos en terreno</h2><p>Para industrias, bodegas, oficinas, comercio y hogares. Cada trabajo termina con pruebas, informe y fotos.</p></div>
+      <div class="sh"><span class="k">Servicios</span><h2>Lo que hacemos en terreno</h2><p>Para industrias, bodegas, oficinas, comercio y hogares.</p></div>
       <div class="serv">
-        <article class="sv"><div class="cto"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></i>Circuito 1</div>
+        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></i>
           <h3>Mantención de tableros eléctricos</h3><p>Preventiva y correctiva, con pauta y registro de cada tablero.</p>
-          <ul><li>Reapriete y limpieza</li><li>Prueba de protectores diferenciales</li><li>Medición de aislación</li><li>Informe con fotos</li></ul></article>
-        <article class="sv"><div class="cto"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 8v8M12 8v8M16 8v8"/></svg></i>Circuito 2</div>
+          <ul><li>Reapriete y limpieza</li><li>Prueba de protectores diferenciales</li><li>Medición de aislación</li></ul><a href="#cotizar" data-serv="Mantención de tableros">Cotizar mantención</a></article>
+        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 8v8M12 8v8M16 8v8"/></svg></i>
           <h3>Reposición y modernización de tableros</h3><p>Gabinetes nuevos ordenados, rotulados y con espacio para crecer.</p>
-          <ul><li>25 % de espacio libre de reserva</li><li>Tapas troqueladas y prensaestopas</li><li>Plano unilineal actualizado</li><li>Puesta en marcha probada</li></ul></article>
-        <article class="sv"><div class="cto"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10"/><circle cx="12" cy="17" r="4"/><path d="M8 7h-2M8 11h-2"/></svg></i>Circuito 3</div>
-          <h3>Termografía infrarroja</h3><p>Detectamos puntos calientes antes de que se conviertan en una falla o un incendio.</p>
-          <ul><li>Cámara termográfica</li><li>Informe por punto con temperatura</li><li>Prioridad de corrección</li></ul></article>
-        <article class="sv ac"><div class="cto"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17c0 2 2 2 2 4M12 17c0 2 2 2 2 4M17 17c0 2 2 2 2 4"/></svg></i>Circuito 4</div>
-          <h3>Instalación de aire acondicionado</h3><p>Equipos split para casas, oficinas y locales, con su circuito eléctrico propio.</p>
-          <ul><li>Unidad interior y exterior</li><li>Cañerías, cable de control y desagüe</li><li>Alimentación con su protección</li></ul></article>
-        <article class="sv ac"><div class="cto"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></i>Circuito 5</div>
+          <ul><li>25 % de espacio libre de reserva</li><li>Tapas troqueladas y prensaestopas</li><li>Plano unilineal actualizado</li></ul><a href="#cotizar" data-serv="Reposición de tablero">Cotizar tablero</a></article>
+        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10"/><circle cx="12" cy="17" r="4"/><path d="M8 7H6M8 11H6"/></svg></i>
+          <h3>Termografía infrarroja</h3><p>Puntos calientes detectados antes de que sean una falla o un incendio.</p>
+          <ul><li>Informe por punto con temperatura</li><li>Prioridad de corrección</li></ul><a href="#cotizar" data-serv="Termografía">Cotizar termografía</a></article>
+        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17c0 2 2 2 2 4M12 17c0 2 2 2 2 4M17 17c0 2 2 2 2 4"/></svg></i>
+          <h3>Instalación de aire acondicionado</h3><p>Equipos split para casas, oficinas y locales, con circuito eléctrico propio.</p>
+          <ul><li>Cañerías, cable de control y desagüe</li><li>Alimentación con su protección</li></ul><a href="#cotizar" data-serv="Instalación de aire acondicionado">Cotizar instalación</a></article>
+        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></i>
           <h3>Venta de equipos de aire acondicionado</h3><p>Te ayudamos a elegir la capacidad correcta y te lo entregamos instalado.</p>
-          <ul><li>Cálculo de BTU según el recinto</li><li>Equipo más instalación en una sola cotización</li></ul></article>
-        <article class="sv"><div class="cto"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></i>Circuito 6</div>
-          <h3>Regularización y declaración TE1</h3><p>Dejamos la instalación conforme a los Pliegos RIC y la declaramos ante la SEC con instalador autorizado.</p>
-          <ul><li>Levantamiento y plano</li><li>Correcciones necesarias</li><li>Trámite TE1</li></ul></article>
+          <ul><li>Cálculo de BTU según el recinto</li><li>Equipo e instalación en una sola cotización</li></ul><a href="#aire">Calcular mi equipo</a></article>
+        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></i>
+          <h3>Regularización y declaración TE1</h3><p>Instalación conforme a los Pliegos RIC y declarada ante la SEC.</p>
+          <ul><li>Levantamiento y plano</li><li>Correcciones y trámite TE1</li></ul><a href="#cotizar" data-serv="Regularización y TE1">Cotizar regularización</a></article>
       </div>
     </div>
   </section>
 
-  <section class="s ac-band" id="aire">
+  <section class="s" id="plan" style="padding-top:0">
     <div class="in">
-      <div class="sh"><span class="k">Aire acondicionado</span><h2>El equipo justo, instalado como corresponde</h2><p>Un equipo chico no enfría y uno grande gasta de más. Calcula una referencia y te confirmamos la capacidad en la visita.</p></div>
+      <div class="plan">
+        <div>
+          <span class="k">Plan de mantención</span>
+          <h2>Tu instalación revisada todo el año, sin tener que acordarte</h2>
+          <p>Para pymes, locales, oficinas y bodegas. Acordamos la frecuencia y vamos en las fechas programadas. Después de cada visita recibes un informe con fotos y lo que conviene corregir.</p>
+          <a class="btn btn-p" href="#cotizar" data-serv="Plan de mantención para mi empresa">Cotizar mi plan</a>
+          <p class="nota">Se cotiza según la cantidad de tableros y la frecuencia que elijas.</p>
+        </div>
+        <ul class="lista">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Visitas programadas</b><span>Dos veces al año para locales, oficinas e industrias; una vez al año para casas. Si tu operación lo necesita, acordamos más visitas.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Tableros revisados y probados</b><span>Reapriete, limpieza y prueba de protectores diferenciales en cada visita.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Termografía para encontrar puntos calientes</b><span>Detecta conexiones que se calientan antes de que fallen.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Aire acondicionado incluido si lo necesitas</b><span>Limpieza de filtros y revisión de tus equipos en la misma visita.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Historial de tu instalación</b><span>Cada informe queda guardado: sirve para auditorías, seguros y para planificar inversiones.</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="aire" style="background:var(--card);border-block:1px solid var(--line)">
+    <div class="in">
+      <div class="sh"><span class="k">Aire acondicionado</span><h2>El equipo justo, instalado como corresponde</h2><p>Un equipo chico no enfría y uno grande gasta de más. Calcula una referencia y te confirmamos la capacidad en la visita. En verano las instalaciones se agendan por orden de llegada: cotiza con tiempo.</p></div>
       <div class="ac-grid">
         <div class="btu" aria-live="polite">
           <h3>Calculadora de referencia</h3>
@@ -273,14 +302,14 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           </div>
           <label for="sol">Sol directo en la tarde<select id="sol"><option value="1">No</option><option value="1.15">Sí</option></select></label>
           <div><output id="btuOut">13.000 BTU</output><small id="btuEq">Referencia: equipo de 12.000 BTU</small></div>
-          <small>Es una estimación por superficie. En la visita revisamos altura, ventanas, personas y equipos antes de recomendar el equipo.</small>
-          <a class="btn btn-wa js-wa" id="btuWa" href="#contacto" data-msg="Hola, quiero cotizar un aire acondicionado.">Cotizar este equipo</a>
+          <small>Es una estimación por superficie. En la visita revisamos altura, ventanas, personas y equipos.</small>
+          <a class="btn btn-p" id="btuCot" href="#cotizar">Cotizar este equipo</a>
         </div>
         <ul class="lista">
-          <li><i class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></i><div><b>Circuito eléctrico propio</b><span>El equipo queda con su automático y su protector diferencial, no colgado de un enchufe.</span></div></li>
-          <li><i class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></i><div><b>Desagüe y cañerías ordenadas</b><span>Sin goteras en el muro ni cañerías a la vista sin protección.</span></div></li>
-          <li><i class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></i><div><b>Prueba de funcionamiento</b><span>Encendemos, medimos y te explicamos el uso y la mantención antes de irnos.</span></div></li>
-          <li><i class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg></i><div><b>Mantención anual</b><span>Limpieza de filtros y serpentines para que el equipo dure y gaste menos.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Circuito eléctrico propio</b><span>El equipo queda con su automático y su protector diferencial, no colgado de un enchufe.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Desagüe y cañerías ordenadas</b><span>Sin goteras en el muro ni cañerías a la vista sin protección.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Prueba de funcionamiento</b><span>Encendemos, medimos y te explicamos el uso antes de irnos.</span></div></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Mantención anual</b><span>Limpieza de filtros y serpentines para que el equipo dure y gaste menos.</span></div></li>
         </ul>
       </div>
     </div>
@@ -292,14 +321,14 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
         <div>
           <span class="k">Diagnóstico Express</span>
           <h2>¿Tu tablero está seguro? Lo revisamos en una visita.</h2>
-          <p>Para casas, departamentos, locales y pymes. Ideal antes de una auditoría, una mudanza o si saltan los automáticos. Te entregamos un informe con lo que encontramos y qué corregir primero.</p>
+          <p>Para casas, departamentos, locales y pymes. Ideal antes de una auditoría, una mudanza o si saltan los automáticos.</p>
           <div class="precio"><b>$40.000</b><span>IVA incluido · 1 tablero<br>Tablero adicional: $10.000</span></div>
-          <p class="fuera">Si nos contratas la reparación o la regularización dentro de 15 días, te descontamos el valor del diagnóstico.</p>
+          <p class="nota">Si nos contratas la reparación o la regularización dentro de 15 días, te descontamos el valor del diagnóstico.</p>
           <div class="ctas">
-            <a class="btn btn-wa" id="btnAgenda" href="#contacto" hidden>Elegir día y hora</a>
-            <a class="btn btn-wa js-wa" href="#contacto" data-msg="Hola, quiero agendar un Diagnóstico Express de mi tablero ($40.000).">Agendar por WhatsApp</a>
+            <a class="btn btn-p" id="btnAgenda" href="#cotizar">Elegir día y hora</a>
+            <a class="btn btn-s" href="#cotizar" data-serv="Diagnóstico Express">Prefiero que me llamen</a>
           </div>
-          <p class="fuera" id="agendaNota" hidden>Eliges día y hora en nuestra agenda y la visita queda en el calendario. Pagas al llegar la visita.</p>
+          <p class="nota" id="agendaNota">Eliges el día y la hora en nuestra agenda. Pagas al llegar la visita.</p>
         </div>
         <div>
           <ol>
@@ -308,7 +337,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
             <li><div><b>Prueba del protector diferencial</b><span>Comprobamos que corte cuando debe.</span></div></li>
             <li><div><b>Informe con fotos y semáforo</b><span>Verde, amarillo o rojo, qué corregir primero y el presupuesto si hace falta.</span></div></li>
           </ol>
-          <p class="fuera">No incluye medición de aislación, reparaciones, materiales ni el trámite TE1: se cotizan aparte. Tableros industriales o de fuerza van con nuestro servicio industrial.</p>
+          <p class="nota">No incluye medición de aislación, reparaciones, materiales ni el trámite TE1: se cotizan aparte. Tableros industriales o de fuerza van con nuestro servicio industrial.</p>
         </div>
       </div>
     </div>
@@ -316,83 +345,84 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 
   <section class="s" id="como">
     <div class="in">
-      <div class="sh"><span class="k">Cómo trabajamos</span><h2>De la visita al informe</h2></div>
-      <ol class="pasos">
-        <li><b>Visita técnica</b><span>Vemos la instalación y lo que necesitas.</span></li>
-        <li><b>Cotización clara</b><span>Alcances, materiales y plazo por escrito.</span></li>
-        <li><b>Ejecución</b><span>Cuadrilla propia, con orden y seguridad.</span></li>
-        <li><b>Informe y pruebas</b><span>Fotos, mediciones y puesta en marcha.</span></li>
-      </ol>
+      <div class="sh"><span class="k">Respaldo</span><h2>Cómo trabajamos</h2></div>
       <div class="datos">
-        <div class="dt"><b>Contrato industrial vigente</b><span>Contrato de mantención eléctrica con Bosch Rexroth Chile en Santiago, Concepción y Antofagasta.</span></div>
+        <div class="dt"><b>Contrato industrial vigente</b><span>Mantención eléctrica para Bosch Rexroth Chile en Santiago, Concepción y Antofagasta.</span></div>
         <div class="dt"><b>Normativa chilena</b><span>Pliegos Técnicos RIC de la SEC en cada trabajo y declaración TE1 cuando corresponde.</span></div>
-        <div class="dt"><b>Todo queda documentado</b><span>Informe técnico con fotos, estado de pago y plano unilineal según el trabajo.</span></div>
+        <div class="dt"><b>Todo queda documentado</b><span>Cotización por escrito, informe técnico con fotos y plano unilineal según el trabajo.</span></div>
       </div>
-      <div class="zonas" aria-label="Zonas donde trabajamos"><span>Santiago · base en Pudahuel</span><span>Concepción</span><span>Antofagasta</span></div>
     </div>
   </section>
 
-  <section class="s contacto" id="contacto">
+  <section class="s" id="preguntas" style="padding-top:0">
     <div class="in">
-      <div class="sh"><span class="k">Contacto</span><h2>Cuéntanos qué necesitas</h2><p>Déjanos tus datos y te contactamos con la cotización. También se abre WhatsApp con tu mensaje listo. Respondemos en horario hábil.</p></div>
-      <div class="cgrid">
-        <form class="cot" id="cot" novalidate>
-          <label for="cNom">Nombre<input id="cNom" autocomplete="name" required></label>
-          <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization"></label>
-          <label for="cTel">Teléfono o WhatsApp<input id="cTel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 ..."></label>
-          <label for="cMail">Correo (opcional)<input id="cMail" type="email" autocomplete="email"></label>
-          <label for="cCom">Comuna o ciudad<input id="cCom" required></label>
-          <label for="cSer">Servicio<select id="cSer"><option>Mantención de tableros</option><option>Reposición de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Compra de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y TE1</option><option>Otro</option></select></label>
-          <label class="full" for="cMsg">Mensaje<textarea id="cMsg" placeholder="Ej: tablero de una bodega de 400 m², saltan los automáticos en la tarde."></textarea></label>
-          <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
-          <button class="btn btn-wa full" type="submit">Enviar solicitud</button>
-          <p class="cmsg" id="cOut" role="status"></p>
-        </form>
-        <div class="cdirecto">
-          <div class="cd"><span>WhatsApp y teléfono</span><b id="telTxt">+56 9 4153 1025</b></div>
-          <div class="cd"><span>Correo</span><b>serviciosmr94@gmail.com</b></div>
-          <div class="cd"><span>Dirección</span><b>Pudahuel, Santiago</b></div>
-        </div>
+      <div class="sh"><span class="k">Preguntas frecuentes</span><h2>Lo que más nos preguntan</h2></div>
+      <div class="faq">
+        <details><summary>¿Cuánto cuesta revisar mi tablero?</summary><p>El Diagnóstico Express cuesta $40.000 con IVA incluido por un tablero, y $10.000 por cada tablero adicional. Si después nos contratas la reparación dentro de 15 días, te descontamos ese valor.</p></details>
+        <details><summary>¿Por qué saltan los automáticos?</summary><p>Puede ser sobrecarga, un cortocircuito, humedad o un protector diferencial que detecta una fuga. En la visita lo medimos y te decimos qué corregir; no conviene subir la capacidad del automático sin revisar el cable.</p></details>
+        <details><summary>¿Qué es el TE1 y cuándo lo necesito?</summary><p>Es la declaración de la instalación eléctrica ante la SEC. Se pide al conectar o aumentar el empalme, en ampliaciones y en muchos arriendos o ventas. La hace un instalador autorizado.</p></details>
+        <details><summary>¿Qué capacidad de aire acondicionado necesito?</summary><p>Depende de los metros, el sol y el uso del recinto. Usa la calculadora de esta página como referencia y la confirmamos en la visita.</p></details>
+        <details><summary>¿Cada cuánto hay que revisar un tablero eléctrico?</summary><p>Una vez al año en casas y departamentos, y dos veces al año en locales, oficinas e industrias. Además, conviene revisarlo si saltan los automáticos, si huele a quemado o si se agregaron equipos nuevos.</p></details>
+        <details><summary>¿Cada cuánto se mantiene un aire acondicionado?</summary><p>Igual que el tablero: una mantención al año en casas y departamentos, y dos veces al año en locales, oficinas e industrias. Incluye limpieza de filtros y serpentines, revisión del desagüe y de la parte eléctrica. Así enfría mejor, gasta menos y dura más.</p></details>
+        <details><summary>¿Trabajan con empresas?</summary><p>Sí. Tenemos un plan de mantención con visitas programadas, y hacemos termografía y reposición de tableros para industrias, bodegas y comercio, con informe por trabajo.</p></details>
       </div>
+    </div>
+  </section>
+
+  <section class="s fin" id="contacto">
+    <div class="in">
+      <div class="sh"><span class="k">Contacto</span><h2>Hablemos</h2><p>Escríbenos con el formulario, llámanos o agenda directo el Diagnóstico Express. Atendemos de lunes a viernes, de 9:00 a 18:00.</p></div>
+      <div class="canales">
+        <div class="cn"><span>Teléfono</span><b>+56 9 4153 1025</b><a href="tel:+56941531025">Llamar</a></div>
+        <div class="cn"><span>Correo</span><b>serviciosmr94@gmail.com</b><small>Respondemos dentro del día hábil.</small></div>
+        <div class="cn"><span>Agenda</span><b>Diagnóstico Express</b><a id="agenda2" href="#diagnostico">Elegir día y hora</a></div>
+      </div>
+      <a class="btn btn-p" href="#cotizar" style="align-self:flex-start">Pedir cotización</a>
     </div>
   </section>
 </main>
 
-<footer><div class="in"><span>Servicios MR · Iván Patricio Morales Roldán E.I.R.L.</span><span>Mantención eléctrica industrial y climatización · Chile</span></div></footer>
-<a class="wa-float js-wa" href="#contacto" data-msg="Hola, quiero cotizar con Servicios MR." aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-1.7-.1-.4-.1-.9-.3-1.5-.6-2.7-1.2-4.4-3.9-4.6-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.1.1.6-.1 1.2Z"/></svg></a>
+<footer><div class="in"><span>Servicios MR · Iván Patricio Morales Roldán E.I.R.L. · Pudahuel, Santiago</span><span>Mantención eléctrica industrial y climatización · <a href="privacidad.html">Aviso de privacidad</a></span></div></footer>
 
 <script>
 (function(){
-  const WA = '56941531025';   // confirmado por Iván el 20-11-2026
   const FORM = 'https://script.google.com/macros/s/AKfycbxyyqgsIaAi4kOp1kje4KWQQb4IX4suFT_5td-b93nScNfaQxdR0Y9JPN6tyleoKQtT/exec';     // Apps Script "Formulario web MR" (termina en /exec)
-  const AGENDA = 'https://calendar.app.google/oz4k5SoRuBtVQooq9'; // página de reservas de Google Calendar
-  if (AGENDA.indexOf('https://') === 0) { const b = document.getElementById('btnAgenda'); b.href = AGENDA; b.target = '_blank'; b.rel = 'noopener'; b.hidden = false; document.getElementById('agendaNota').hidden = false; }
-  const wa = t => 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t);
-  document.querySelectorAll('.js-wa').forEach(a => { a.href = wa(a.dataset.msg || 'Hola'); a.target = '_blank'; a.rel = 'noopener'; });
-  // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol; equipos comerciales típicos
+  const AGENDA = 'https://calendar.app.google/oz4k5SoRuBtVQooq9'; // agenda de citas de Google Calendar
+  const $ = id => document.getElementById(id);
+  if (AGENDA.indexOf('https://') === 0) {
+    ['btnAgenda', 'agenda2'].forEach(id => { const a = $(id); a.href = AGENDA; a.target = '_blank'; a.rel = 'noopener'; });
+  } else { $('agendaNota').textContent = 'Déjanos tus datos y te llamamos para coordinar el día. Pagas al llegar la visita.'; }
+  // los enlaces "Cotizar ..." dejan elegido el servicio en el formulario
+  function elegir(serv, msg){ const s = $('cSer'); if (serv) s.value = serv; if (msg && !$('cMsg').value) $('cMsg').value = msg; setTimeout(() => $('cNom').focus({preventScroll:true}), 400); }
+  document.querySelectorAll('[data-serv]').forEach(a => a.addEventListener('click', () => elegir(a.dataset.serv)));
+  // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol
   const EQ = [9000, 12000, 18000, 24000, 36000, 48000, 60000];
   const fmt = n => n.toLocaleString('es-CL');
+  let btuTxt = '';
   function calc(){
-    const m2 = Math.max(0, Number(document.getElementById('m2').value) || 0);
-    const btu = Math.round(m2 * Number(document.getElementById('uso').value) * Number(document.getElementById('sol').value) / 500) * 500;
+    const m2 = Math.max(0, Number($('m2').value) || 0);
+    const btu = Math.round(m2 * Number($('uso').value) * Number($('sol').value) / 500) * 500;
     const eq = EQ.find(e => e >= btu * 0.95) || null;
-    document.getElementById('btuOut').textContent = fmt(btu) + ' BTU';
-    document.getElementById('btuEq').textContent = eq ? 'Referencia: equipo de ' + fmt(eq) + ' BTU' : 'Sobre 60.000 BTU: conviene más de un equipo o uno central; lo vemos en la visita.';
-    document.getElementById('btuWa').href = wa('Hola, quiero cotizar un aire acondicionado para ' + m2 + ' m² (' + document.getElementById('uso').selectedOptions[0].text.toLowerCase() + '). La calculadora me dio ' + fmt(btu) + ' BTU.');
+    $('btuOut').textContent = fmt(btu) + ' BTU';
+    $('btuEq').textContent = eq ? 'Referencia: equipo de ' + fmt(eq) + ' BTU' : 'Sobre 60.000 BTU conviene más de un equipo o uno central; lo vemos en la visita.';
+    btuTxt = 'Recinto de ' + m2 + ' m² (' + $('uso').selectedOptions[0].text.toLowerCase() + '). La calculadora dio ' + fmt(btu) + ' BTU.';
   }
-  ['m2', 'uso', 'sol'].forEach(id => document.getElementById(id).addEventListener('input', calc)); calc();
-  document.getElementById('cot').addEventListener('submit', ev => {
+  ['m2', 'uso', 'sol'].forEach(id => $(id).addEventListener('input', calc)); calc();
+  $('btuCot').addEventListener('click', () => { const s = $('cSer'); s.value = 'Compra de equipo de aire acondicionado'; $('cMsg').value = btuTxt; setTimeout(() => $('cNom').focus({preventScroll:true}), 400); });
+  // envío: llega a Servicios MR (Drive -> Jarvis -> Panel y celular de Iván)
+  $('cot').addEventListener('submit', ev => {
     ev.preventDefault();
-    const v = id => document.getElementById(id).value.trim(), out = document.getElementById('cOut');
-    if (!v('cNom') || !v('cCom')) { out.textContent = 'Escribe tu nombre y la comuna para poder cotizarte.'; return; }
+    const v = id => $(id).value.trim(), out = $('cOut');
+    out.className = 'cmsg';
+    if (!v('cNom') || !v('cCom')) { out.textContent = 'Escribe tu nombre y tu comuna para poder cotizarte.'; return; }
     if (!v('cTel') && !v('cMail')) { out.textContent = 'Déjanos un teléfono o un correo para responderte.'; return; }
-    const t = 'Hola, soy ' + v('cNom') + (v('cEmp') ? ' de ' + v('cEmp') : '') + ', de ' + v('cCom') + '. Quiero cotizar: ' + v('cSer') + '.' + (v('cMsg') ? ' ' + v('cMsg') : '');
-    if (FORM.indexOf('https://') === 0) {
-      const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: v('cMsg'), origen: 'formulario', web_sitio: v('cWeb') });
-      fetch(FORM, { method: 'POST', mode: 'no-cors', body: datos }).catch(() => {});
-    }
-    const a = document.createElement('a'); a.href = wa(t); a.target = '_blank'; a.rel = 'noopener'; document.body.append(a); a.click(); a.remove();
-    out.textContent = 'Recibimos tu solicitud y se abrió WhatsApp con tu mensaje. Si no se abrió, escríbenos al número de la derecha.';
+    if (v('cMail') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('cMail'))) { out.textContent = 'Revisa el correo: parece incompleto.'; return; }
+    const btn = $('cBtn'); btn.disabled = true; btn.textContent = 'Enviando…';
+    const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: v('cMsg'), origen: 'formulario', web_sitio: v('cWeb') });
+    const listo = () => { out.className = 'cmsg ok'; out.textContent = 'Listo, recibimos tu solicitud. Te contactamos dentro del día hábil.'; $('cot').reset(); btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
+    const fallo = () => { out.textContent = 'No pudimos enviar. Llámanos al +56 9 4153 1025 y te atendemos.'; btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
+    if (FORM.indexOf('https://') !== 0) { fallo(); return; }
+    fetch(FORM, { method: 'POST', mode: 'no-cors', body: datos }).then(listo, fallo);
   });
 })();
 </script>
