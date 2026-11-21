@@ -364,7 +364,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 <script>
 (function(){
   const WA = '56941531025';   // confirmado por Iván el 20-11-2026
-  const FORM = '';     // Apps Script "Formulario web MR" (termina en /exec)
+  const FORM = 'https://script.google.com/macros/s/AKfycbxyyqgsIaAi4kOp1kje4KWQQb4IX4suFT_5td-b93nScNfaQxdR0Y9JPN6tyleoKQtT/exec';     // Apps Script "Formulario web MR" (termina en /exec)
   const AGENDA = ''; // página de reservas de Google Calendar
   if (AGENDA.indexOf('https://') === 0) { const b = document.getElementById('btnAgenda'); b.href = AGENDA; b.target = '_blank'; b.rel = 'noopener'; b.hidden = false; document.getElementById('agendaNota').hidden = false; }
   const wa = t => 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t);
