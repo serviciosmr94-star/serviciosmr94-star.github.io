@@ -296,10 +296,10 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <div class="precio"><b>$40.000</b><span>IVA incluido · 1 tablero<br>Tablero adicional: $10.000</span></div>
           <p class="fuera">Si nos contratas la reparación o la regularización dentro de 15 días, te descontamos el valor del diagnóstico.</p>
           <div class="ctas">
-            <a class="btn btn-wa" id="btnAgenda" href="#contacto" hidden>Agendar y pagar en línea</a>
+            <a class="btn btn-wa" id="btnAgenda" href="#contacto" hidden>Elegir día y hora</a>
             <a class="btn btn-wa js-wa" href="#contacto" data-msg="Hola, quiero agendar un Diagnóstico Express de mi tablero ($40.000).">Agendar por WhatsApp</a>
           </div>
-          <p class="fuera" id="agendaNota" hidden>Eliges día y hora, pagas con Mercado Pago y la visita queda confirmada.</p>
+          <p class="fuera" id="agendaNota" hidden>Eliges día y hora en nuestra agenda y la visita queda en el calendario. Pagas al llegar la visita.</p>
         </div>
         <div>
           <ol>
@@ -365,7 +365,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 (function(){
   const WA = '56941531025';   // confirmado por Iván el 20-11-2026
   const FORM = 'https://script.google.com/macros/s/AKfycbxyyqgsIaAi4kOp1kje4KWQQb4IX4suFT_5td-b93nScNfaQxdR0Y9JPN6tyleoKQtT/exec';     // Apps Script "Formulario web MR" (termina en /exec)
-  const AGENDA = ''; // página de reservas de Google Calendar
+  const AGENDA = 'https://calendar.app.google/oz4k5SoRuBtVQooq9'; // página de reservas de Google Calendar
   if (AGENDA.indexOf('https://') === 0) { const b = document.getElementById('btnAgenda'); b.href = AGENDA; b.target = '_blank'; b.rel = 'noopener'; b.hidden = false; document.getElementById('agendaNota').hidden = false; }
   const wa = t => 'https://wa.me/' + WA + '?text=' + encodeURIComponent(t);
   document.querySelectorAll('.js-wa').forEach(a => { a.href = wa(a.dataset.msg || 'Hola'); a.target = '_blank'; a.rel = 'noopener'; });
