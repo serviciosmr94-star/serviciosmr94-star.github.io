@@ -2,6 +2,8 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YV6oVesV6wcJ6KOCmMCzGu5nwZz8Y+/tgMLfM6xNo+k='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
 <title>Servicios MR · Electricidad Industrial y aire acondicionado · Santiago</title>
@@ -222,13 +224,13 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
         <h2>Solicite su cotización</h2>
         <p class="sub">Respondemos dentro del día hábil, por teléfono o correo. Las solicitudes recibidas en fin de semana o feriado se responden el día hábil siguiente.</p>
         <form class="cot" id="cot" novalidate>
-          <label for="cNom">Nombre<input id="cNom" autocomplete="name" required></label>
-          <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization"></label>
-          <label for="cTel">Teléfono<input id="cTel" type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 ..."></label>
-          <label for="cMail">Correo<input id="cMail" type="email" autocomplete="email" placeholder="nombre@empresa.cl"></label>
-          <label for="cCom">Comuna o ciudad<input id="cCom" required></label>
+          <label for="cNom">Nombre<input id="cNom" autocomplete="name" maxlength="80" required></label>
+          <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization" maxlength="80"></label>
+          <label for="cTel">Teléfono<input id="cTel" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="+56 9 ..."></label>
+          <label for="cMail">Correo<input id="cMail" type="email" autocomplete="email" maxlength="80" placeholder="nombre@empresa.cl"></label>
+          <label for="cCom">Comuna o ciudad<input id="cCom" maxlength="60" required></label>
           <label for="cSer">Servicio<select id="cSer"><option>Mantención de tableros</option><option>Plan de mantención para empresas</option><option>Reposición o normalización de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Suministro de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y declaración TE1</option><option>Otro</option></select></label>
-          <label class="full" for="cMsg">Describa su requerimiento<textarea id="cMsg" placeholder="Ej.: tablero de una bodega de 400 m²; las protecciones operan en horario de tarde."></textarea></label>
+          <label class="full" for="cMsg">Describa su requerimiento<textarea id="cMsg" maxlength="1000" placeholder="Ej.: tablero de una bodega de 400 m²; las protecciones operan en horario de tarde."></textarea></label>
           <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
           <button class="btn btn-p full" type="submit" id="cBtn">Enviar solicitud</button>
           <p class="cmsg" id="cOut" role="status"></p>
