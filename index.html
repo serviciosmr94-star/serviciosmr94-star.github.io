@@ -415,7 +415,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     if (v('cMail') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('cMail'))) { out.textContent = 'Revise el correo: parece incompleto.'; return; }
     const btn = $('cBtn'); btn.disabled = true; btn.textContent = 'Enviando…';
     const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: v('cMsg'), origen: 'formulario', web_sitio: v('cWeb') });
-    const listo = () => { out.className = 'cmsg ok'; out.textContent = 'Solicitud recibida. Lo contactaremos dentro del día hábil.'; $('cot').reset(); btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
+    const listo = () => { out.className = 'cmsg ok'; out.textContent = 'Solicitud recibida. Lo contactaremos dentro del día hábil. ¿Necesita otro servicio? Elíjalo y envíe de nuevo: lo sumamos a la misma solicitud.'; $('cSer').selectedIndex = 0; $('cMsg').value = ''; btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
     const fallo = () => { out.textContent = 'No fue posible enviar la solicitud. Llámenos al +56 9 4153 1025.'; btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
     if (FORM.indexOf('https://') !== 0) { fallo(); return; }
     fetch(FORM, { method: 'POST', mode: 'no-cors', body: datos }).then(listo, fallo);
