@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YV6oVesV6wcJ6KOCmMCzGu5nwZz8Y+/tgMLfM6xNo+k='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YHMNJe1MQi0nfXrO+Vyb1pgtuWI3grtN4JjU1fnIZOQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -100,6 +100,9 @@ form.cot textarea{resize:vertical;min-height:84px}
 .cmsg.ok{color:var(--ok);font-weight:600}
 .priv{grid-column:1/-1;margin:0;font-size:12.5px;color:var(--muted)}
 .priv a,footer a{color:inherit}
+form.cot label.acep{grid-column:1/-1;flex-direction:row;align-items:flex-start;gap:9px;font-weight:500;font-size:13.5px;line-height:1.4}
+form.cot label.acep input{width:18px;height:18px;flex:0 0 18px;margin:1px 0 0;padding:0;accent-color:var(--turq)}
+form.cot label.acep a{color:inherit}
 
 /* secciones */
 section.s{padding-block:68px}
@@ -229,12 +232,14 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <label for="cTel">Teléfono<input id="cTel" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="+56 9 ..."></label>
           <label for="cMail">Correo<input id="cMail" type="email" autocomplete="email" maxlength="80" placeholder="nombre@empresa.cl"></label>
           <label for="cCom">Comuna o ciudad<input id="cCom" maxlength="60" required></label>
+          <label for="cTipo">Tipo de cliente<select id="cTipo"><option>Empresa o industria</option><option>Local comercial</option><option>Vivienda</option></select></label>
+          <label for="cTab">N° de tableros (opcional)<input id="cTab" type="number" inputmode="numeric" min="1" max="999" placeholder="Ej.: 2"></label>
           <label for="cSer">Servicio<select id="cSer"><option>Mantención de tableros</option><option>Plan de mantención para empresas</option><option>Reposición o normalización de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Suministro de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y declaración TE1</option><option>Otro</option></select></label>
           <label class="full" for="cMsg">Describa su requerimiento<textarea id="cMsg" maxlength="1000" placeholder="Ej.: tablero de una bodega de 400 m²; las protecciones operan en horario de tarde."></textarea></label>
           <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+          <label class="acep" for="cAcep"><input type="checkbox" id="cAcep"><span>Acepto que Servicios MR use mis datos para responder y dar seguimiento a esta solicitud, según el <a href="privacidad.html">aviso de privacidad</a>.</span></label>
           <button class="btn btn-p full" type="submit" id="cBtn">Enviar solicitud</button>
           <p class="cmsg" id="cOut" role="status"></p>
-          <p class="priv">Sus datos se usan solo para responder y dar seguimiento a su solicitud. <a href="privacidad.html">Aviso de privacidad</a>.</p>
         </form>
       </div>
     </div>
@@ -320,7 +325,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <span class="k">Diagnóstico Express</span>
           <h2>Evaluación del estado de su tablero eléctrico en una visita</h2>
           <p>Para viviendas, locales comerciales y pymes. Recomendado antes de una auditoría, un cambio de recinto o cuando las protecciones operan sin causa aparente.</p>
-          <div class="precio"><b>$65.000</b><span>+ IVA · 1 tablero<br>Tablero adicional: $25.000 + IVA</span></div>
+          <div class="precio"><b>$65.000</b><span>+ IVA ($77.350 IVA incluido) · 1 tablero<br>Tablero adicional: $25.000 + IVA ($29.750 IVA incluido)</span></div>
           <p class="nota">Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p>
           <div class="ctas">
             <a class="btn btn-p" id="btnAgenda" href="#cotizar">Elegir día y hora</a>
@@ -356,12 +361,13 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     <div class="in">
       <div class="sh"><span class="k">Preguntas frecuentes</span><h2>Consultas habituales</h2></div>
       <div class="faq">
-        <details><summary>¿Cuál es el valor de una revisión de tablero?</summary><p>El Diagnóstico Express tiene un valor de $65.000 + IVA por un tablero y $25.000 + IVA por cada tablero adicional. Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p></details>
+        <details><summary>¿Cuál es el valor de una revisión de tablero?</summary><p>El Diagnóstico Express tiene un valor de $65.000 + IVA ($77.350 IVA incluido) por un tablero y $25.000 + IVA ($29.750 IVA incluido) por cada tablero adicional. Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p></details>
         <details><summary>¿Por qué operan las protecciones de mi tablero?</summary><p>Las causas más frecuentes son sobrecarga, cortocircuito o una corriente de fuga a tierra (humedad o aislación dañada), que hace operar al protector diferencial. En la visita se realizan mediciones para identificar la causa. Nunca se debe aumentar la capacidad de un interruptor automático sin verificar la sección del conductor que protege.</p></details>
         <details><summary>¿Qué es el TE1 y cuándo se requiere?</summary><p>Es la declaración de una instalación eléctrica interior ante la SEC. Se exige en instalaciones nuevas, ampliaciones, aumentos de capacidad del empalme y, con frecuencia, en procesos de arriendo, venta o patente comercial. La presenta un instalador eléctrico autorizado por la SEC.</p></details>
         <details><summary>¿Qué capacidad de aire acondicionado requiere mi recinto?</summary><p>Depende de la superficie, la exposición solar y el uso del recinto. La calculadora de esta página entrega una referencia; la capacidad definitiva se confirma en la visita técnica.</p></details>
         <details><summary>¿Con qué frecuencia se debe revisar un tablero eléctrico?</summary><p>Una vez al año en viviendas y dos veces al año en locales, oficinas e industrias. También corresponde revisarlo si las protecciones operan con frecuencia, si hay olor a quemado o si se incorporaron equipos nuevos.</p></details>
         <details><summary>¿Con qué frecuencia se mantiene un equipo de aire acondicionado?</summary><p>Una vez al año en viviendas y dos veces al año en locales, oficinas e industrias. La mantención incluye limpieza de filtros y serpentines, revisión del drenaje y de la alimentación eléctrica, lo que mejora la eficiencia y prolonga la vida útil del equipo.</p></details>
+        <details><summary>¿Los trabajos tienen garantía?</summary><p>Sí. La mano de obra tiene la garantía legal de 3 meses desde la entrega del trabajo. Queda indicada por escrito en cada cotización.</p></details>
         <details><summary>¿Atienden a empresas?</summary><p>Sí. Ofrecemos planes de mantención con visitas programadas, termografía y reposición de tableros para industrias, bodegas y comercio, con informe técnico por intervención. Para tableros industriales o de fuerza, seleccione «Plan de mantención para empresas» o «Mantención de tableros» en el formulario y enviaremos una cotización formal.</p></details>
       </div>
     </div>
@@ -415,9 +421,13 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     if (!v('cNom') || !v('cCom')) { out.textContent = 'Indique su nombre y comuna para preparar la cotización.'; return; }
     if (!v('cTel') && !v('cMail')) { out.textContent = 'Indique un teléfono o un correo de contacto.'; return; }
     if (v('cMail') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('cMail'))) { out.textContent = 'Revise el correo: parece incompleto.'; return; }
+    if (!$('cAcep').checked) { out.textContent = 'Para enviar, marque la casilla de aceptación del aviso de privacidad.'; return; }
+    const nTab = Math.min(999, Math.max(0, parseInt(v('cTab'), 10) || 0));
+    const ficha = 'Tipo de cliente: ' + v('cTipo') + (nTab ? ' · N° de tableros: ' + nTab : '') + ' · Aceptó el aviso de privacidad.';
+    const msj = (ficha + (v('cMsg') ? '\n' + v('cMsg') : '')).slice(0, 1000);
     const btn = $('cBtn'); btn.disabled = true; btn.textContent = 'Enviando…';
-    const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: v('cMsg'), origen: 'formulario', web_sitio: v('cWeb') });
-    const listo = () => { out.className = 'cmsg ok'; out.textContent = 'Solicitud recibida. Lo contactaremos dentro del día hábil. ¿Necesita otro servicio? Elíjalo y envíe de nuevo: lo sumamos a la misma solicitud.'; $('cSer').selectedIndex = 0; $('cMsg').value = ''; btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
+    const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: msj, origen: 'formulario', web_sitio: v('cWeb') });
+    const listo = () => { out.className = 'cmsg ok'; out.textContent = 'Solicitud recibida. Lo contactaremos dentro del día hábil (si es fin de semana o feriado, el día hábil siguiente). Si necesita otro servicio, lo vemos en el mismo contacto; no es necesario enviar otra solicitud.'; $('cot').reset(); btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
     const fallo = () => { out.textContent = 'No fue posible enviar la solicitud. Llámenos al +56 9 4153 1025.'; btn.disabled = false; btn.textContent = 'Enviar solicitud'; };
     if (FORM.indexOf('https://') !== 0) { fallo(); return; }
     fetch(FORM, { method: 'POST', mode: 'no-cors', body: datos }).then(listo, fallo);
