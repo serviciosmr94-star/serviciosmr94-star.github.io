@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t8HrgPyLzr16e0ODog02MdxrzPplkmPBrSd5bw7UsuY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DQqtbSN62RgB51oFlzASWAP97wh5kQ+hWr3t1p5WA0E='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -449,6 +449,19 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   }
   ['m2', 'uso', 'sol'].forEach(id => $(id).addEventListener('input', calc)); calc();
   $('btuCot').addEventListener('click', () => { const s = $('cSer'); s.value = 'Suministro de equipo de aire acondicionado'; $('cMsg').value = btuTxt; setTimeout(() => $('cNom').focus({preventScroll:true}), 400); });
+  // origen del cliente (sin código de terceros): gclid/utm del anuncio o buscador de donde vino; se guarda solo en esta pestaña
+  const origen = (() => {
+    try {
+      const q = new URLSearchParams(location.search), lim = t => String(t).replace(/[^\w .\-áéíóúñ]/gi, '').slice(0, 60);
+      let o = '';
+      if (q.get('gclid') || q.get('gbraid') || q.get('wbraid') || /^(google|adwords)$/i.test(q.get('utm_source') || '') && /cpc|ppc|ads|paid/i.test(q.get('utm_medium') || ''))
+        o = 'Google Ads' + (q.get('utm_campaign') ? ' (' + lim(q.get('utm_campaign')) + ')' : '');
+      else if (q.get('utm_source')) o = lim(q.get('utm_source')) + (q.get('utm_medium') ? ' / ' + lim(q.get('utm_medium')) : '');
+      else if (/^https:\/\/(www\.)?google\./.test(document.referrer)) o = 'Búsqueda de Google (sin anuncio)';
+      if (o) sessionStorage.setItem('mrOrigen', o);
+      return sessionStorage.getItem('mrOrigen') || '';
+    } catch (e) { return ''; }
+  })();
   // envío: llega a Servicios MR (Drive -> Jarvis -> Panel y celular de Iván)
   $('cot').addEventListener('submit', ev => {
     ev.preventDefault();
@@ -459,7 +472,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     if (v('cMail') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('cMail'))) { out.textContent = 'Revise el correo: parece incompleto.'; return; }
     if (!$('cAcep').checked) { out.textContent = 'Para enviar, marque la casilla de aceptación del aviso de privacidad.'; return; }
     const nTab = Math.min(999, Math.max(0, parseInt(v('cTab'), 10) || 0));
-    const ficha = 'Tipo de cliente: ' + v('cTipo') + (nTab ? ' · N° de tableros: ' + nTab : '') + ' · Aceptó el aviso de privacidad.';
+    const ficha = 'Tipo de cliente: ' + v('cTipo') + (nTab ? ' · N° de tableros: ' + nTab : '') + ' · Aceptó el aviso de privacidad.' + (origen ? ' · Llegó por: ' + origen : '');
     const msj = (ficha + (v('cMsg') ? '\n' + v('cMsg') : '')).slice(0, 1000);
     const btn = $('cBtn'); btn.disabled = true; btn.textContent = 'Enviando…';
     const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: msj, origen: 'formulario', web_sitio: v('cWeb') });
