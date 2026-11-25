@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-RiBIL+FGwcDuVikRzJTJd60GXzYD8zXELADDDl2zK1Q='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qOdHlA7gAHHp6wPXOdr/OEZjUYF2jEM5dKxJEyH4hEk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -164,6 +164,13 @@ section.s>.in{display:flex;flex-direction:column;gap:30px}
 .dx li b{display:block}
 .dx li span{font-size:14px;color:var(--on-ink-mut)}
 .dx .nota{font-size:13.5px}
+.dx .pasos{margin-top:22px;display:flex;flex-direction:column;gap:12px}
+.dx .paso{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.dx .paso>span{font:600 13px var(--f-mono);color:var(--turq);letter-spacing:.04em;min-width:64px}
+.dx .paso select{font:inherit;font-size:16px;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.dx .total{font:600 18px/1.2 var(--f-body);color:#fff}
+.dx .btn[aria-disabled="true"]{opacity:.45;pointer-events:none}
+.dx .ctas.otros{margin-top:6px}
 
 /* respaldo */
 .datos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
@@ -327,12 +334,13 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <p>Para viviendas, locales comerciales y pymes. Recomendado antes de una auditoría, un cambio de recinto o cuando las protecciones operan sin causa aparente.</p>
           <div class="precio"><b>$65.000</b><span>+ IVA ($77.350 IVA incluido) · 1 tablero<br>Tablero adicional: $25.000 + IVA ($29.750 IVA incluido)</span></div>
           <p class="nota">Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p>
-          <div class="ctas">
-            <a class="btn btn-p" id="btnAgenda" href="#cotizar">Elegir día y hora</a>
-            <a class="btn btn-s" id="btnPago" href="#cotizar" hidden>Pagar en línea</a>
-            <a class="btn btn-s" href="#cotizar" data-serv="Diagnóstico Express">Solicitar contacto</a>
+          <div class="pasos" id="pasosDx">
+            <div class="paso"><span>PASO 1</span><label for="dxN">Tableros a revisar <select id="dxN"><option value="1">1 tablero</option><option value="2">2 tableros</option><option value="3">3 tableros</option><option value="4">4 o más</option></select></label><b class="total" id="dxTotal">Total: $77.350 IVA incluido</b></div>
+            <div class="paso"><span>PASO 2</span><a class="btn btn-p" id="btnPago" href="#cotizar">Pagar con Mercado Pago</a></div>
+            <div class="paso"><span>PASO 3</span><a class="btn btn-s" id="btnAgenda" href="#cotizar" aria-disabled="true">Ya pagué: elegir día y hora</a></div>
           </div>
-          <p class="nota" id="agendaNota">Seleccione día y hora en nuestra agenda. El pago se realiza al momento de la visita.</p>
+          <p class="nota" id="agendaNota">El pago se realiza en línea antes de agendar, con tarjeta de débito o crédito, en la página segura de Mercado Pago. Después del pago se habilita la agenda para elegir día y hora.</p>
+          <div class="ctas otros"><a class="btn btn-s" href="#cotizar" data-serv="Diagnóstico Express">Prefiero que me contacten</a></div>
         </div>
         <div>
           <ol>
@@ -380,7 +388,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
       <div class="canales">
         <div class="cn"><span>Teléfono</span><b>+56 9 4153 1025</b><a href="tel:+56941531025">Llamar</a></div>
         <div class="cn"><span>Correo</span><b>ivan.m@serviciosmr.cl</b><small>Respondemos dentro del día hábil.</small></div>
-        <div class="cn"><span>Agenda</span><b>Diagnóstico Express</b><a id="agenda2" href="#diagnostico">Elegir día y hora</a></div>
+        <div class="cn"><span>Agenda</span><b>Diagnóstico Express</b><a href="#diagnostico">Pagar y agendar</a></div>
       </div>
       <a class="btn btn-p" href="#cotizar" style="align-self:flex-start">Solicitar cotización</a>
     </div>
@@ -394,11 +402,36 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   const FORM = 'https://script.google.com/macros/s/AKfycbxyyqgsIaAi4kOp1kje4KWQQb4IX4suFT_5td-b93nScNfaQxdR0Y9JPN6tyleoKQtT/exec';     // Apps Script "Formulario web MR" (termina en /exec)
   const AGENDA = 'https://calendar.app.google/oz4k5SoRuBtVQooq9'; // agenda de citas de Google Calendar
   const $ = id => document.getElementById(id);
-  const PAGO = 'https://link.mercadopago.cl/serviciosmr'; // link de cobro de Mercado Pago (web/pago_url.txt)
-  if (PAGO.indexOf('https://link.mercadopago.cl/') === 0) { const a = $('btnPago'); a.href = PAGO; a.target = '_blank'; a.rel = 'noopener'; a.hidden = false; $('agendaNota').textContent = 'Seleccione día y hora en nuestra agenda. Puede pagar en línea con Mercado Pago o al momento de la visita: $77.350 IVA incluido por un tablero, más $29.750 por cada tablero adicional.'; }
-  if (AGENDA.indexOf('https://') === 0) {
-    ['btnAgenda', 'agenda2'].forEach(id => { const a = $(id); a.href = AGENDA; a.target = '_blank'; a.rel = 'noopener'; });
-  } else { $('agendaNota').textContent = 'Déjenos sus datos y lo contactaremos para coordinar la visita. El pago se realiza al momento de la visita.'; }
+  const PAGO = 'https://link.mercadopago.cl/serviciosmr';    // link de cobro general de Mercado Pago (web/pago_url.txt)
+  const PAGOS = {};    // links con monto fijo por cantidad de tableros (web/pago_links.txt)
+  const okMP = u => typeof u === 'string' && /^https:\/\/(link\.mercadopago\.cl|mpago\.la|www\.mercadopago\.cl)\//.test(u);
+  const fmt$ = n => '$' + n.toLocaleString('es-CL');
+  const pago = $('btnPago'), ag = $('btnAgenda');
+  function dx(){
+    const n = Number($('dxN').value);
+    if (n >= 4) {   // 4 o más tableros: se cotiza
+      $('dxTotal').textContent = 'Se cotiza según la instalación';
+      pago.textContent = 'Solicitar cotización'; pago.href = '#cotizar'; pago.removeAttribute('target');
+      pago.dataset.serv = 'Diagnóstico Express'; return;
+    }
+    delete pago.dataset.serv;
+    const total = Math.round((65000 + 25000 * (n - 1)) * 1.19);
+    $('dxTotal').textContent = 'Total: ' + fmt$(total) + ' IVA incluido';
+    const fijo = okMP(PAGOS[String(n)]) ? PAGOS[String(n)] : '';
+    const url = fijo || (okMP(PAGO) ? PAGO : '');
+    if (!url) { pago.textContent = 'Solicitar contacto'; pago.href = '#cotizar'; pago.removeAttribute('target'); pago.dataset.serv = 'Diagnóstico Express'; return; }
+    pago.textContent = 'Pagar ' + fmt$(total) + ' con Mercado Pago';
+    pago.href = url; pago.target = '_blank'; pago.rel = 'noopener';
+    $('agendaNota').textContent = fijo
+      ? 'El pago se realiza en línea antes de agendar, con tarjeta de débito o crédito, en la página segura de Mercado Pago. Después del pago se habilita la agenda para elegir día y hora.'
+      : 'En Mercado Pago ingrese exactamente ' + fmt$(total) + '. El pago se realiza en línea antes de agendar; después del pago se habilita la agenda para elegir día y hora.';
+  }
+  $('dxN').addEventListener('change', dx); dx();
+  if (AGENDA.indexOf('https://') === 0) { ag.href = AGENDA; ag.target = '_blank'; ag.rel = 'noopener'; }
+  pago.addEventListener('click', () => {
+    if (pago.target === '_blank') ag.setAttribute('aria-disabled', 'false');
+    else if (pago.dataset.serv) elegir(pago.dataset.serv);
+  });
   // los enlaces "Cotizar ..." dejan elegido el servicio en el formulario
   function elegir(serv, msg){ const s = $('cSer'); if (serv) s.value = serv; if (msg && !$('cMsg').value) $('cMsg').value = msg; setTimeout(() => $('cNom').focus({preventScroll:true}), 400); }
   document.querySelectorAll('[data-serv]').forEach(a => a.addEventListener('click', () => elegir(a.dataset.serv)));
