@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-qOdHlA7gAHHp6wPXOdr/OEZjUYF2jEM5dKxJEyH4hEk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t8HrgPyLzr16e0ODog02MdxrzPplkmPBrSd5bw7UsuY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -403,7 +403,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   const AGENDA = 'https://calendar.app.google/oz4k5SoRuBtVQooq9'; // agenda de citas de Google Calendar
   const $ = id => document.getElementById(id);
   const PAGO = 'https://link.mercadopago.cl/serviciosmr';    // link de cobro general de Mercado Pago (web/pago_url.txt)
-  const PAGOS = {};    // links con monto fijo por cantidad de tableros (web/pago_links.txt)
+  const PAGOS = {"1": "https://mpago.la/1jYtUkE", "2": "https://mpago.la/2qGr6Aj", "3": "https://mpago.la/19j6ig7"};    // links con monto fijo por cantidad de tableros (web/pago_links.txt)
   const okMP = u => typeof u === 'string' && /^https:\/\/(link\.mercadopago\.cl|mpago\.la|www\.mercadopago\.cl)\//.test(u);
   const fmt$ = n => '$' + n.toLocaleString('es-CL');
   const pago = $('btnPago'), ag = $('btnAgenda');
