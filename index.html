@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DQqtbSN62RgB51oFlzASWAP97wh5kQ+hWr3t1p5WA0E='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-STc5gobScXwVXFO0PQbEvQU7ePxW/KHh3YJFoiGJOLg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -146,6 +146,26 @@ section.s>.in{display:flex;flex-direction:column;gap:30px}
 .lista svg{width:22px;height:22px;color:var(--ok);margin-top:2px}
 .lista b{display:block;color:var(--text)}
 .lista span{color:var(--muted);font-size:15px}
+
+/* equipos Clark: instalado o solo equipo (v12.29) */
+.eqs{margin-top:40px}
+.eqs h3.t{font-size:clamp(22px,2.6vw,28px);color:var(--text)}
+.eqs>p{color:var(--muted);margin:8px 0 18px}
+.eq-ent{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:0 0 18px;font-size:14.5px;font-weight:600;color:var(--muted)}
+.eq-ent select{font:inherit;font-size:15px;color:var(--text);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:9px 12px}
+.eq-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:940px){.eq-grid{grid-template-columns:1fr}}
+.eq{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.eq h4{margin:0;font:700 24px/1.1 var(--f-disp);color:var(--text)}
+.eq .op{border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.eq .op.dest{border:2px solid var(--turq);background:var(--turq-soft)}
+.eq .op span{font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.eq .op.dest span{color:var(--turq)}
+.eq .op b{font:700 30px/1 var(--f-disp);color:var(--text);font-variant-numeric:tabular-nums}
+.eq .op small{color:var(--muted);font-size:13.5px}
+.eq .op .btn{white-space:normal;text-align:center}
+.eq .ahorro{margin:0;font-size:13.5px;font-weight:600;color:var(--ok)}
+.eqs .nota{font-size:13.5px;color:var(--muted);margin:14px 0 0}
 
 /* diagnóstico express */
 .dx{background:var(--ink);color:var(--on-ink);border-radius:16px;padding:34px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
@@ -322,6 +342,33 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Mantención periódica</b><span>Limpieza de filtros y serpentines para mantener la eficiencia y la vida útil del equipo. Puede incorporarla a su Plan de mantención, en la misma visita de sus tableros.</span></div></li>
         </ul>
       </div>
+      <div class="eqs" id="equipos">
+        <h3 class="t">Equipos Clark: instalados o solo el equipo</h3>
+        <p>Precios del Paquete verano, válidos hasta el 28-02-2027. Si no sabe qué capacidad necesita, use la calculadora de arriba.</p>
+        <label class="eq-ent" for="eqEnt">Si compra solo el equipo, ¿cómo lo recibe?<select id="eqEnt"><option value="r">Retiro en Pudahuel, sin costo</option><option value="d">Despacho en la Región Metropolitana: $20.000</option></select></label>
+        <div class="eq-grid">
+          <article class="eq">
+            <h4>Clark 9.000 BTU</h4>
+            <div class="op dest"><span>Instalado · recomendado</span><b>$571.200</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><a class="btn btn-p" href="#cotizar" data-eq-ins="9.000">Reservar instalación</a></div>
+            <p class="ahorro">Instalado le cuesta solo $100.000 más que el equipo solo.</p>
+            <div class="op"><span>Solo equipo</span><b data-eq-precio="9.000">$471.200</b><small data-eq-ent="9.000">IVA incluido · retiro en Pudahuel</small><a class="btn btn-s" href="#cotizar" data-eq-solo="9.000">Comprar solo el equipo</a></div>
+          </article>
+          <article class="eq">
+            <h4>Clark 12.000 BTU</h4>
+            <div class="op dest"><span>Instalado · recomendado</span><b>$690.200</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><a class="btn btn-p" href="#cotizar" data-eq-ins="12.000">Reservar instalación</a></div>
+            <p class="ahorro">Instalado le cuesta solo $100.000 más que el equipo solo.</p>
+            <div class="op"><span>Solo equipo</span><b data-eq-precio="12.000">$590.200</b><small data-eq-ent="12.000">IVA incluido · retiro en Pudahuel</small><a class="btn btn-s" href="#cotizar" data-eq-solo="12.000">Comprar solo el equipo</a></div>
+          </article>
+          <article class="eq">
+            <h4>Clark 18.000 BTU</h4>
+            <div class="op dest"><span>Instalado · recomendado</span><b>$856.800</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><a class="btn btn-p" href="#cotizar" data-eq-ins="18.000">Reservar instalación</a></div>
+            <p class="ahorro">Instalado le cuesta solo $100.000 más que el equipo solo.</p>
+            <div class="op"><span>Solo equipo</span><b data-eq-precio="18.000">$756.800</b><small data-eq-ent="18.000">IVA incluido · retiro en Pudahuel</small><a class="btn btn-s" href="#cotizar" data-eq-solo="18.000">Comprar solo el equipo</a></div>
+          </article>
+        </div>
+        <p class="nota">Instalado: cada metro de cañería sobre los 3 incluidos vale $17.850 IVA incluido; la instalación en altura, las perforaciones en hormigón y los soportes especiales se valorizan en la visita técnica. Para reservar la instalación nos envía fotos del lugar de las dos unidades y del tablero, y le confirmamos el valor final antes de pagar. Garantía: 6 meses en el equipo y 3 meses en la mano de obra.</p>
+        <p class="nota">Solo equipo: después de pagar, complete el formulario con su teléfono (y la dirección, si pidió despacho) y lo contactamos dentro del día hábil para coordinar la entrega. Por ser una compra a distancia, puede retractarse dentro de 10 días desde que recibe el equipo, devolviéndolo sin instalar, con su embalaje, manuales y accesorios en buen estado; le devolvemos lo pagado dentro de 10 días.</p>
+      </div>
     </div>
   </section>
 
@@ -435,6 +482,30 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   // los enlaces "Cotizar ..." dejan elegido el servicio en el formulario
   function elegir(serv, msg){ const s = $('cSer'); if (serv) s.value = serv; if (msg && !$('cMsg').value) $('cMsg').value = msg; setTimeout(() => $('cNom').focus({preventScroll:true}), 400); }
   document.querySelectorAll('[data-serv]').forEach(a => a.addEventListener('click', () => elegir(a.dataset.serv)));
+  // equipos Clark (v12.29): instalado se reserva por el formulario; solo equipo se paga con link fijo (retiro o despacho)
+  const EQL = {};   // web/equipos_links.txt: r9000=..., d9000=... (r = retiro, d = despacho)
+  const EQP = { '9.000': 471200, '12.000': 590200, '18.000': 756800 }, DESP = 20000;
+  function eqAct(){
+    const d = $('eqEnt').value === 'd';
+    document.querySelectorAll('[data-eq-solo]').forEach(a => {
+      const b = a.dataset.eqSolo, k = (d ? 'd' : 'r') + b.replace('.', ''), u = EQL[k];
+      document.querySelector('[data-eq-precio="' + b + '"]').textContent = fmt$(EQP[b] + (d ? DESP : 0));
+      document.querySelector('[data-eq-ent="' + b + '"]').textContent = d ? 'IVA incluido · con despacho en la Región Metropolitana' : 'IVA incluido · retiro en Pudahuel';
+      if (okMP(u)) { a.href = u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Pagar ' + fmt$(EQP[b] + (d ? DESP : 0)) + ' con Mercado Pago'; }
+      else { a.href = '#cotizar'; a.removeAttribute('target'); a.textContent = 'Comprar solo el equipo'; }
+    });
+  }
+  $('eqEnt').addEventListener('change', eqAct); eqAct();
+  document.querySelectorAll('[data-eq-solo]').forEach(a => a.addEventListener('click', () => {
+    const b = a.dataset.eqSolo, d = $('eqEnt').value === 'd';
+    $('cMsg').value = (a.target === '_blank' ? 'Pagué' : 'Quiero comprar') + ' solo el equipo Clark ' + b + ' BTU (' + fmt$(EQP[b] + (d ? DESP : 0)) + ' IVA incluido), ' + (d ? 'con despacho. Dirección de despacho: ' : 'con retiro en Pudahuel.');
+    elegir('Suministro de equipo de aire acondicionado');
+    if (a.target === '_blank') location.hash = 'cotizar';
+  }));
+  document.querySelectorAll('[data-eq-ins]').forEach(a => a.addEventListener('click', () => {
+    $('cMsg').value = 'Quiero el Paquete verano: Clark ' + a.dataset.eqIns + ' BTU instalado. Distancia aproximada entre la unidad interior y la exterior: ';
+    elegir('Instalación de aire acondicionado');
+  }));
   // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol
   const EQ = [9000, 12000, 18000, 24000, 36000, 48000, 60000];
   const fmt = n => n.toLocaleString('es-CL');
