@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YHMNJe1MQi0nfXrO+Vyb1pgtuWI3grtN4JjU1fnIZOQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-RiBIL+FGwcDuVikRzJTJd60GXzYD8zXELADDDl2zK1Q='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -329,6 +329,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
           <p class="nota">Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p>
           <div class="ctas">
             <a class="btn btn-p" id="btnAgenda" href="#cotizar">Elegir día y hora</a>
+            <a class="btn btn-s" id="btnPago" href="#cotizar" hidden>Pagar en línea</a>
             <a class="btn btn-s" href="#cotizar" data-serv="Diagnóstico Express">Solicitar contacto</a>
           </div>
           <p class="nota" id="agendaNota">Seleccione día y hora en nuestra agenda. El pago se realiza al momento de la visita.</p>
@@ -393,6 +394,8 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   const FORM = 'https://script.google.com/macros/s/AKfycbxyyqgsIaAi4kOp1kje4KWQQb4IX4suFT_5td-b93nScNfaQxdR0Y9JPN6tyleoKQtT/exec';     // Apps Script "Formulario web MR" (termina en /exec)
   const AGENDA = 'https://calendar.app.google/oz4k5SoRuBtVQooq9'; // agenda de citas de Google Calendar
   const $ = id => document.getElementById(id);
+  const PAGO = 'https://link.mercadopago.cl/serviciosmr'; // link de cobro de Mercado Pago (web/pago_url.txt)
+  if (PAGO.indexOf('https://link.mercadopago.cl/') === 0) { const a = $('btnPago'); a.href = PAGO; a.target = '_blank'; a.rel = 'noopener'; a.hidden = false; $('agendaNota').textContent = 'Seleccione día y hora en nuestra agenda. Puede pagar en línea con Mercado Pago o al momento de la visita: $77.350 IVA incluido por un tablero, más $29.750 por cada tablero adicional.'; }
   if (AGENDA.indexOf('https://') === 0) {
     ['btnAgenda', 'agenda2'].forEach(id => { const a = $(id); a.href = AGENDA; a.target = '_blank'; a.rel = 'noopener'; });
   } else { $('agendaNota').textContent = 'Déjenos sus datos y lo contactaremos para coordinar la visita. El pago se realiza al momento de la visita.'; }
