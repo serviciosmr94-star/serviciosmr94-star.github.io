@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-DndGkHhjSWWrTA0Jc/OCDvz01QscX9C/dPirvZ4Sk34='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-eK6F/GOrbcs8JGN/h4VgB9dZ/4Wz4JPcb9D9w9e1SyU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -76,11 +76,31 @@ a{color:inherit}
 @media (max-width:560px){.tel span{display:none}}
 
 /* portada: titular + solicitud */
-.hero{background:var(--card);border-bottom:1px solid var(--line)}
+.hero{position:relative;overflow:hidden;background:#0d2731;border-bottom:1px solid var(--line)}
+.hfondo{position:absolute;inset:0;z-index:0}
+.hfondo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.6s ease}
+.hfondo img.on{opacity:1;animation:kb 9s ease-out forwards}
+.hfondo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,28,36,.9) 0%,rgba(9,28,36,.66) 50%,rgba(9,28,36,.25) 100%)}
+@media (max-width:940px){.hfondo::after{background:linear-gradient(180deg,rgba(9,28,36,.72) 0%,rgba(9,28,36,.9) 55%,rgba(9,28,36,.96) 100%)}}
+.hero .in{position:relative;z-index:1}
+.hero .k{color:#7fd8e6}
+.hero .lead{color:rgba(255,255,255,.84)}
+.hero .pruebas b{color:#fff}
+.hero .pruebas span{color:rgba(255,255,255,.72)}
+.hero .pruebas svg{color:#5fe0a6}
+.hero .zonas span{background:rgba(255,255,255,.12);color:#fff}
+.hero .sol{box-shadow:0 24px 60px -24px rgba(0,0,0,.6)}
+.hfoto{display:inline-block;margin:24px 0 0;padding:8px 14px;border-radius:999px;font-size:13px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(4px)}
+.hfoto b{color:#fff;font-weight:600}
+.hfoto i{display:inline-block;vertical-align:middle;margin-right:8px;width:8px;height:8px;border-radius:50%;background:#5fe0a6;box-shadow:0 0 0 0 rgba(95,224,166,.7);animation:late 2s infinite}
+@keyframes late{70%{box-shadow:0 0 0 9px rgba(95,224,166,0)}100%{box-shadow:0 0 0 0 rgba(95,224,166,0)}}
+.hero h1,.hero .lead,.hero .hfoto,.hero .pruebas{animation:sube .8s ease both}
+.hero .lead{animation-delay:.12s}.hero .hfoto{animation-delay:.24s}.hero .pruebas{animation-delay:.36s}
+@keyframes sube{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .hero .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,460px);gap:48px;align-items:start;padding-block:52px 56px}
 @media (max-width:940px){.hero .in{grid-template-columns:1fr;gap:30px;padding-block:32px 36px}}
-.hero h1{font-size:clamp(36px,5.2vw,60px);line-height:1;font-weight:700;color:var(--text);margin-top:14px}
-.hero h1 em{font-style:normal;color:var(--turq)}
+.hero h1{font-size:clamp(34px,4.4vw,54px);line-height:1.04;font-weight:700;color:#fff;margin-top:14px}
+.hero h1 em{font-style:normal;color:#6fd6e6}
 .lead{font-size:18px;color:var(--muted);max-width:54ch;margin:18px 0 0}
 .pruebas{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 22px;max-width:560px}
 @media (max-width:480px){.pruebas{grid-template-columns:1fr}}
@@ -312,9 +332,78 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
   .barra-cel .btn{padding:13px 10px}
   footer .in{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 }
-@media (prefers-reduced-motion:reduce){.fotos-h img{animation:none}.rv{opacity:1;transform:none;transition:none}.p4{transition:none}}
+@media (prefers-reduced-motion:reduce){.fotos-h img,.hfondo img.on,.hfoto i,.hero h1,.hero .lead,.hero .hfoto,.hero .pruebas{animation:none}.rv{opacity:1;transform:none;transition:none}.p4{transition:none}}
 
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* v12.35: la página completa con fotos reales y movimiento */
+.sv{overflow:hidden}
+.sv-foto{margin:-24px -22px 0;aspect-ratio:16/9;overflow:hidden;background:var(--turq-soft)}
+.sv-foto img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.sv:hover .sv-foto img{transform:scale(1.07)}
+.sv .ic{margin-top:-30px;position:relative;background:#fff;border:1px solid var(--line);box-shadow:0 8px 18px -10px rgba(15,52,66,.5)}
+.plan-foto{margin:22px 0 0;position:relative;border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+.plan-foto img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.plan-foto:hover img{transform:scale(1.05)}
+.plan-foto figcaption,.como-foto figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;font-size:13px;color:#fff;background:linear-gradient(transparent,rgba(9,28,36,.85))}
+.cinta{overflow:hidden;margin:0 0 30px;border-radius:14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.cinta-in{display:flex;gap:12px;width:max-content;animation:cinta 45s linear infinite}
+.cinta:hover .cinta-in{animation-play-state:paused}
+.cinta figure{margin:0;position:relative;width:260px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;flex:0 0 auto}
+.cinta img{width:100%;height:100%;object-fit:cover;display:block}
+.cinta figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-size:12.5px;color:#fff;background:linear-gradient(transparent,rgba(9,28,36,.85))}
+@keyframes cinta{to{transform:translateX(calc(-50% - 6px))}}
+@media (max-width:560px){.cinta figure{width:200px}}
+.dx{position:relative;overflow:hidden}
+.dx::before{content:"";position:absolute;inset:0;background:url(trabajos/trabajo_09.jpg) right center/cover;opacity:.1;pointer-events:none}
+.dx>*{position:relative}
+.semaforo{margin:18px 0 6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:9px}
+.sem-t{font:500 11.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--on-ink-mut)}
+.sem{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:center;background:#fff;border-radius:8px;padding:9px 12px;color:var(--text);font-size:14px}
+.sem i{width:12px;height:12px;border-radius:50%}
+.sem b{font-weight:600}
+.sem em{font-style:normal;font:600 11.5px var(--f-mono);padding:4px 8px;border-radius:999px}
+.sem.v i{background:#22a06b}.sem.v em{background:#dcf5e8;color:#16734c}
+.sem.a i{background:#e8a317}.sem.a em{background:#fdf0d2;color:#8a5d00}
+.sem.r i{background:#d6344a;animation:late-r 1.8s infinite}.sem.r em{background:#fbe0e4;color:#a3192d}
+@keyframes late-r{0%{box-shadow:0 0 0 0 rgba(214,52,74,.6)}70%{box-shadow:0 0 0 8px rgba(214,52,74,0)}100%{box-shadow:0 0 0 0 rgba(214,52,74,0)}}
+.sem.rv:nth-child(3){transition-delay:.15s}.sem.rv:nth-child(4){transition-delay:.3s}
+.trab figure{position:relative}
+.trab img{transition:transform .7s ease}
+.trab figure:hover img{transform:scale(1.06)}
+.trab figure.rv:nth-child(3n+2){transition-delay:.1s}.trab figure.rv:nth-child(3n){transition-delay:.2s}
+.rv.vis:not(.p4){transition:opacity .7s ease,transform .7s ease}
+.como-fotos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 26px}
+@media (max-width:640px){.como-fotos{grid-template-columns:1fr 1fr}.como-fotos figure:last-child{display:none}}
+.como-foto{margin:0;position:relative;border-radius:14px;overflow:hidden;aspect-ratio:4/3}
+.como-foto img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.como-foto:hover img{transform:scale(1.06)}
+.fin{background:linear-gradient(rgba(9,28,36,.88),rgba(9,28,36,.88)),url(trabajos/trabajo_06.jpg) center/cover;border-top:0}
+.fin .sh h2{color:#fff}.fin .sh p{color:rgba(255,255,255,.8)}.fin .k{color:#7fd8e6}
+.fin .cn{background:#fff;border-color:transparent}
+@media (prefers-reduced-motion:reduce){.cinta-in{animation:none}.cinta{overflow-x:auto}.sem.r i{animation:none}.sv-foto img,.trab img,.plan-foto img{transition:none}}
+/* v12.35: cuadro de cotización con cabecera, respuesta en el día y sellos */
+.hero .sol{background:var(--card);padding:0;gap:0;overflow:hidden;border:0;border-radius:16px;box-shadow:0 30px 70px -28px rgba(0,0,0,.7);animation:sube .8s .2s ease both}
+.sol-cab{display:flex;align-items:center;gap:14px;padding:20px 24px;background:linear-gradient(120deg,#0f3442 0%,#1d6680 100%);color:#fff;position:relative;overflow:hidden}
+.sol-cab::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.14),transparent);animation:barre 5s ease-in-out 1s infinite}
+@keyframes barre{0%{left:-45%}35%,100%{left:110%}}
+.sol-ic{width:46px;height:46px;flex:0 0 46px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22)}
+.sol-ic svg{width:24px;height:24px}
+.hero .sol h2{color:#fff;font-size:26px}
+.sol-resp{margin:4px 0 0;display:flex;align-items:center;gap:8px;font-size:13.5px;color:rgba(255,255,255,.85)}
+.sol-resp i{width:8px;height:8px;border-radius:50%;background:#5fe0a6;animation:late 2s infinite}
+.sol-cuerpo{padding:20px 24px 22px;display:flex;flex-direction:column;gap:16px}
+.hero .sol p.sub{margin:0;font-size:14px;line-height:1.55;color:var(--muted);background:var(--turq-soft);border-left:3px solid var(--turq);border-radius:0 8px 8px 0;padding:10px 12px}
+.hero .sol p.sub b{color:var(--text)}
+.hero form.cot input,.hero form.cot select,.hero form.cot textarea{background:var(--paper);transition:border-color .2s,box-shadow .2s,background .2s}
+.hero form.cot input:focus,.hero form.cot select:focus,.hero form.cot textarea:focus{background:#fff}
+.hero form.cot label:focus-within{color:var(--turq)}
+.brillo{position:relative;overflow:hidden;font-size:16px;padding-block:16px;box-shadow:0 10px 22px -10px rgba(200,40,80,.6);transition:transform .2s,box-shadow .2s}
+.brillo:hover{transform:translateY(-2px);box-shadow:0 14px 26px -10px rgba(200,40,80,.7)}
+.brillo::after{content:"";position:absolute;top:0;bottom:0;width:30%;left:-40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);animation:barre 4s ease-in-out 2s infinite}
+.sol-conf{list-style:none;margin:0;padding:14px 0 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted)}
+.sol-conf li{display:flex;align-items:center;gap:6px}
+.sol-conf svg{width:15px;height:15px;color:var(--ok)}
+@media (prefers-reduced-motion:reduce){.hero .sol,.sol-cab::after,.brillo::after,.sol-resp i{animation:none}.brillo::after{display:none}}
 </style>
 </head>
 <body>
@@ -339,12 +428,13 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
     </div>
   </div>
   <section class="hero" id="cotizar">
+    <div class="hfondo" aria-hidden="true"><img class="on" src="trabajos/trabajo_01.jpg" alt=""><img alt=""></div>
     <div class="in">
       <div>
         <span class="k">Ingeniería eléctrica · Climatización</span>
         <h1 id="hTit">Instalaciones eléctricas seguras y <em>climatización eficiente</em> para empresas y hogares.</h1>
         <p class="lead" id="hLead">Mantención preventiva y correctiva de tableros eléctricos, normalización de instalaciones, termografía infrarroja y suministro e instalación de equipos de climatización. Ejecutamos cada trabajo conforme a los Pliegos Técnicos RIC de la SEC y lo respaldamos con un informe técnico.</p>
-        <div class="fotos-h" id="fotosH" aria-label="Trabajos reales de Servicios MR"><figure><img src="trabajos/trabajo_01.jpg" alt="Técnicos en terreno" width="300" height="400"><figcaption>Técnicos en terreno</figcaption></figure><figure><img src="trabajos/trabajo_06.jpg" alt="Aire acondicionado instalado" width="300" height="400"><figcaption>Aire acondicionado instalado</figcaption></figure><figure><img src="trabajos/trabajo_03.jpg" alt="Mantención de tableros" width="300" height="400"><figcaption>Mantención de tableros</figcaption></figure></div>
+        <p class="hfoto" aria-live="polite"><i aria-hidden="true"></i>Foto real de nuestro trabajo · <b id="hFoto">Técnicos en terreno</b></p>
         <ul class="pruebas">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Contrato industrial vigente</b><span>Mantención eléctrica para Bosch Rexroth Chile.</span></div></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Cotización por escrito</b><span>Alcances, materiales y plazos definidos.</span></div></li>
@@ -355,8 +445,12 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
       </div>
 
       <div class="sol">
-        <h2>Solicite su cotización</h2>
-        <p class="sub">Respondemos dentro del día hábil, por teléfono o correo. Las solicitudes recibidas en fin de semana o feriado se responden el día hábil siguiente. Si necesita varios servicios, elija el principal e indique los demás en «Describa su requerimiento». El Diagnóstico Express y los equipos Clark no necesitan cotización: se pagan y agendan en línea, en sus secciones.</p>
+        <div class="sol-cab">
+          <span class="sol-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h6l1 2h3v15H5V6h3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+          <div><h2>Solicite su cotización</h2><p class="sol-resp"><i aria-hidden="true"></i>Respondemos dentro del día hábil</p></div>
+        </div>
+        <div class="sol-cuerpo">
+        <p class="sub">Por teléfono o correo; lo recibido en fin de semana o feriado, el día hábil siguiente. ¿Varios servicios? Elija el principal y cuéntenos el resto en «Describa su requerimiento». <b>Diagnóstico Express y equipos Clark</b> no necesitan cotización: se pagan y agendan en línea.</p>
         <form class="cot" id="cot" novalidate>
           <label for="cNom">Nombre<input id="cNom" autocomplete="name" maxlength="80" required></label>
           <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization" maxlength="80"></label>
@@ -369,9 +463,11 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
           <label class="full" for="cMsg">Describa su requerimiento<textarea id="cMsg" maxlength="1000" placeholder="Ej.: tablero de una bodega de 400 m²; las protecciones operan en horario de tarde."></textarea></label>
           <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
           <label class="acep" for="cAcep"><input type="checkbox" id="cAcep"><span>Acepto que Servicios MR use mis datos para responder y dar seguimiento a esta solicitud, según el <a href="privacidad.html">aviso de privacidad</a>.</span></label>
-          <button class="btn btn-p full" type="submit" id="cBtn">Enviar solicitud</button>
+          <button class="btn btn-p full brillo" type="submit" id="cBtn">Enviar solicitud</button>
           <p class="cmsg" id="cOut" role="status"></p>
         </form>
+        <ul class="sol-conf"><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Cotización por escrito</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Técnicos con licencia SEC</li><li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg>Datos protegidos</li></ul>
+        </div>
       </div>
     </div>
   </section>
@@ -383,22 +479,22 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
     <div class="in">
       <div class="sh"><span class="k">Servicios</span><h2>Servicios en terreno</h2><p id="servSub">Para industrias, centros de distribución, oficinas, comercio y viviendas.</p></div>
       <div class="serv">
-        <article class="sv" data-para="emp"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></i>
+        <article class="sv" data-para="emp"><div class="sv-foto"><img src="trabajos/trabajo_11.jpg" alt="" loading="lazy"></div><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></i>
           <h3>Mantención de tableros eléctricos</h3><p>Preventiva y correctiva, con pauta de inspección y registro por tablero.</p>
           <ul><li>Reapriete de conexiones y limpieza</li><li>Prueba de protectores diferenciales</li><li>Medición de resistencia de aislación</li></ul><a href="#cotizar" data-serv="Mantención de tableros">Cotizar mantención</a></article>
-        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 8v8M12 8v8M16 8v8"/></svg></i>
+        <article class="sv"><div class="sv-foto"><img src="trabajos/trabajo_09.jpg" alt="" loading="lazy"></div><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 8v8M12 8v8M16 8v8"/></svg></i>
           <h3>Reposición y normalización de tableros</h3><p>Gabinetes nuevos, ordenados y rotulados, con capacidad de reserva.</p>
           <ul><li>25 % de espacio de reserva</li><li>Tapas troqueladas y prensaestopas</li><li>Plano unilineal actualizado</li></ul><a href="#cotizar" data-serv="Reposición o normalización de tablero">Cotizar tablero</a></article>
-        <article class="sv" data-para="emp"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10"/><circle cx="12" cy="17" r="4"/><path d="M8 7H6M8 11H6"/></svg></i>
+        <article class="sv" data-para="emp"><div class="sv-foto"><img src="trabajos/trabajo_03.jpg" alt="" loading="lazy"></div><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10"/><circle cx="12" cy="17" r="4"/><path d="M8 7H6M8 11H6"/></svg></i>
           <h3>Termografía infrarroja</h3><p>Detección de puntos calientes antes de que se conviertan en una falla o un incendio.</p>
           <ul><li>Informe por punto inspeccionado con temperatura</li><li>Prioridad de intervención</li></ul><a href="#cotizar" data-serv="Termografía">Cotizar termografía</a></article>
-        <article class="sv" data-para="hog"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17c0 2 2 2 2 4M12 17c0 2 2 2 2 4M17 17c0 2 2 2 2 4"/></svg></i>
+        <article class="sv" data-para="hog"><div class="sv-foto"><img src="trabajos/trabajo_06.jpg" alt="" loading="lazy"></div><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17c0 2 2 2 2 4M12 17c0 2 2 2 2 4M17 17c0 2 2 2 2 4"/></svg></i>
           <h3>Instalación de aire acondicionado</h3><p>Equipos split para viviendas, oficinas y locales, con circuito eléctrico exclusivo.</p>
           <ul><li>Líneas de refrigerante, cable de control y drenaje</li><li>Alimentación con protección dedicada</li></ul><a href="#cotizar" data-serv="Instalación de aire acondicionado">Cotizar instalación</a></article>
-        <article class="sv" data-para="hog"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></i>
+        <article class="sv" data-para="hog"><div class="sv-foto"><img src="trabajos/trabajo_04.jpg" alt="" loading="lazy"></div><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></i>
           <h3>Suministro de equipos de aire acondicionado</h3><p>Dimensionamiento de la capacidad y entrega del equipo instalado y probado.</p>
           <ul><li>Cálculo de capacidad (BTU) según el recinto</li><li>Equipo e instalación en una sola cotización</li><li>Midea, Samsung, LG, Kendal, Anwo y Clark</li></ul><a href="#aire">Calcular capacidad</a></article>
-        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></i>
+        <article class="sv"><div class="sv-foto"><img src="trabajos/trabajo_07.jpg" alt="" loading="lazy"></div><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></i>
           <h3>Regularización y declaración TE1</h3><p>Instalación conforme a los Pliegos Técnicos RIC y declarada ante la SEC.</p>
           <ul><li>Levantamiento y plano unilineal</li><li>Correcciones y declaración TE1</li></ul><a href="#cotizar" data-serv="Regularización y declaración TE1">Cotizar regularización</a></article>
       </div>
@@ -414,6 +510,7 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
           <p>Para pymes, locales comerciales, oficinas y bodegas. Definimos la frecuencia en conjunto y ejecutamos las visitas en las fechas programadas. Cada visita concluye con un informe técnico, registro fotográfico y las acciones recomendadas.</p>
           <a class="btn btn-p" href="#cotizar" data-serv="Plan de mantención para empresas">Cotizar plan</a>
           <p class="nota">Se cotiza según la cantidad de tableros y la frecuencia requerida.</p>
+          <figure class="plan-foto"><img src="trabajos/trabajo_05.jpg" alt="Mantención preventiva de tablero eléctrico" loading="lazy"><figcaption>Mantención preventiva de tablero eléctrico · trabajo real</figcaption></figure>
         </div>
         <ul class="lista">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Visitas programadas</b><span>Dos veces al año en locales, oficinas e industrias; una vez al año en viviendas. Si la operación lo requiere, se programan visitas adicionales.</span></div></li>
@@ -429,6 +526,7 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
   <section class="s" id="aire" data-para="hog" style="background:var(--card);border-block:1px solid var(--line)">
     <div class="in">
       <div class="sh"><span class="k">Aire acondicionado</span><h2>Capacidad correcta e instalación conforme a norma</h2><p>Un equipo subdimensionado no alcanza la temperatura y uno sobredimensionado consume de más. Use la calculadora como referencia; la capacidad definitiva se confirma en la visita técnica. En temporada de verano programamos hasta 5 instalaciones por semana, por orden de solicitud.</p></div>
+      <div class="cinta" aria-label="Instalaciones de aire acondicionado hechas por Servicios MR"><div class="cinta-in"><figure><img src="trabajos/trabajo_06.jpg" alt="Split instalado en departamento" loading="lazy"><figcaption>Split instalado en departamento</figcaption></figure><figure><img src="trabajos/trabajo_04.jpg" alt="Tres unidades exteriores en balcón" loading="lazy"><figcaption>Tres unidades exteriores en balcón</figcaption></figure><figure><img src="trabajos/trabajo_02.jpg" alt="Equipo cassette en oficina" loading="lazy"><figcaption>Equipo cassette en oficina</figcaption></figure><figure><img src="trabajos/trabajo_08.jpg" alt="Unidad exterior en terraza" loading="lazy"><figcaption>Unidad exterior en terraza</figcaption></figure><figure><img src="trabajos/trabajo_10.jpg" alt="Limpieza de serpentín" loading="lazy"><figcaption>Limpieza de serpentín</figcaption></figure><figure><img src="trabajos/trabajo_12.jpg" alt="Unidad exterior en techumbre" loading="lazy"><figcaption>Unidad exterior en techumbre</figcaption></figure><figure aria-hidden="true"><img src="trabajos/trabajo_06.jpg" alt="" loading="lazy"><figcaption>Split instalado en departamento</figcaption></figure><figure aria-hidden="true"><img src="trabajos/trabajo_04.jpg" alt="" loading="lazy"><figcaption>Tres unidades exteriores en balcón</figcaption></figure><figure aria-hidden="true"><img src="trabajos/trabajo_02.jpg" alt="" loading="lazy"><figcaption>Equipo cassette en oficina</figcaption></figure><figure aria-hidden="true"><img src="trabajos/trabajo_08.jpg" alt="" loading="lazy"><figcaption>Unidad exterior en terraza</figcaption></figure><figure aria-hidden="true"><img src="trabajos/trabajo_10.jpg" alt="" loading="lazy"><figcaption>Limpieza de serpentín</figcaption></figure><figure aria-hidden="true"><img src="trabajos/trabajo_12.jpg" alt="" loading="lazy"><figcaption>Unidad exterior en techumbre</figcaption></figure></div></div>
       <div class="ac-grid">
         <div class="btu" aria-live="polite">
           <h3>Calculadora de referencia</h3>
@@ -506,6 +604,11 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
             <li><div><b>Prueba del protector diferencial</b><span>Verificación de su operación ante corriente de fuga.</span></div></li>
             <li><div><b>Informe técnico con semáforo</b><span>Clasificación de hallazgos por prioridad (verde, amarillo, rojo) y presupuesto de corrección si corresponde.</span></div></li>
           </ol>
+          <div class="semaforo" aria-label="Ejemplo ilustrativo del informe con semáforo"><span class="sem-t">Así se ve su informe · ejemplo ilustrativo</span>
+            <div class="sem v"><i></i><b>Conexiones y rotulación</b><em>En orden</em></div>
+            <div class="sem a"><i></i><b>Punto caliente en un automático</b><em>Corregir pronto</em></div>
+            <div class="sem r"><i></i><b>Protector diferencial no opera</b><em>Urgente</em></div>
+          </div>
           <p class="nota">No incluye medición de resistencia de aislación, reparaciones, materiales ni declaración TE1, que se cotizan por separado. Tableros industriales o de fuerza se atienden con nuestro servicio industrial.</p>
         </div>
       </div>
@@ -517,6 +620,7 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
   <section class="s" id="como">
     <div class="in">
       <div class="sh"><span class="k">Respaldo</span><h2>Nuestra forma de trabajo</h2></div>
+      <div class="como-fotos"><figure class="como-foto"><img src="trabajos/trabajo_02.jpg" alt="Instalación de equipo cassette en cielo de oficina" loading="lazy"><figcaption>Instalación de cassette en oficina</figcaption></figure><figure class="como-foto"><img src="trabajos/trabajo_09.jpg" alt="Tablero general con medición y señalización de riesgo eléctrico" loading="lazy"><figcaption>Tablero general con medición</figcaption></figure><figure class="como-foto"><img src="trabajos/trabajo_04.jpg" alt="Tres unidades exteriores de aire acondicionado instaladas en balcón" loading="lazy"><figcaption>Tres equipos instalados en balcón</figcaption></figure></div>
       <div class="datos">
         <div class="dt"><b>Contrato industrial vigente</b><span>Mantención eléctrica para Bosch Rexroth Chile en Santiago, Concepción y Antofagasta.</span></div>
         <div class="dt"><b>Normativa chilena</b><span>Técnicos con licencia SEC, Pliegos Técnicos RIC en cada trabajo y declaración TE1 cuando corresponde.</span></div>
@@ -676,23 +780,21 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
     emp: [['01','Técnicos en terreno'],['03','Mantención de tableros'],['07','Alimentadores y medición'],['05','Mantención preventiva'],['11','Analizador de red'],['02','Equipo cassette en oficina']],
     hog: [['06','Split instalado'],['04','Unidades exteriores'],['02','Equipo cassette en oficina'],['08','Unidad exterior en terraza'],['10','Mantención de aire'],['12','Unidad en techumbre']],
   };
-  const figs = [...document.querySelectorAll('#fotosH figure')];
-  let fset = FOT[''], fpos = 3, fslot = 0;
-  function ponerFoto(fig, f){ const im = fig.querySelector('img'); im.src = 'trabajos/trabajo_' + f[0] + '.jpg'; im.alt = f[1]; fig.querySelector('figcaption').textContent = f[1]; }
-  window.mrFotos = m => { fset = FOT[m || ''] || FOT['']; figs.forEach((fg, i) => ponerFoto(fg, fset[i])); fpos = 3; fslot = 0; };
-  if (!quieto) setInterval(() => {
-    if (document.hidden) return;
-    const fig = figs[fslot], im = fig.querySelector('img'), f = fset[fpos];
-    im.classList.add('sale');
-    setTimeout(() => { ponerFoto(fig, f); im.classList.remove('sale'); }, 900);
-    fpos = (fpos + 1) % fset.length; fslot = (fslot + 1) % figs.length;
-  }, 3800);
+  const fondo = [...document.querySelectorAll('.hfondo img')], hFoto = $('hFoto');
+  let fset = FOT[''], fpos = 0, cara = 0;
+  function mostrar(f){
+    const nx = fondo[1 - cara];
+    const ir = () => { nx.onload = null; nx.classList.add('on'); fondo[cara].classList.remove('on'); cara = 1 - cara; hFoto.textContent = f[1]; };
+    nx.onload = ir; nx.src = 'trabajos/trabajo_' + f[0] + '.jpg'; if (nx.complete && nx.naturalWidth) ir();
+  }
+  window.mrFotos = m => { fset = FOT[m || ''] || FOT['']; fpos = 0; mostrar(fset[0]); };
+  if (!quieto) setInterval(() => { if (document.hidden) return; fpos = (fpos + 1) % fset.length; mostrar(fset[fpos]); }, 5200);
   const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return; io.unobserve(e.target); e.target.classList.add('vis');
     if (e.target.dataset.cuenta && !quieto) { const fin = Number(e.target.dataset.cuenta), ini = fin > 100 ? fin - 40 : 0, t0 = performance.now();
       const paso = t => { const k = Math.min(1, (t - t0) / 1200); e.target.textContent = Math.round(ini + (fin - ini) * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(paso); }; requestAnimationFrame(paso); }
   }), { threshold: .15 }) : null;
-  if (io && !quieto) document.querySelectorAll('section.s .sh, .p4, .exigir').forEach(el => el.classList.add('rv'));
+  if (io && !quieto) document.querySelectorAll('section.s .sh, .p4, .exigir, .sem, .trab figure, .sv, .como-foto, .plan-foto').forEach(el => el.classList.add('rv'));
   document.querySelectorAll('.rv, [data-cuenta]').forEach(el => io ? io.observe(el) : el.classList.add('vis'));
   const hTit = $('hTit'), hLead = $('hLead');
   const MODOS = {
