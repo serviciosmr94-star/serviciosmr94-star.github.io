@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-eK6F/GOrbcs8JGN/h4VgB9dZ/4Wz4JPcb9D9w9e1SyU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-GOtuc4B8Euc73uKTmXNxhTj6VwOtdbo192LvRhAIRFg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -404,6 +404,20 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
 .sol-conf li{display:flex;align-items:center;gap:6px}
 .sol-conf svg{width:15px;height:15px;color:var(--ok)}
 @media (prefers-reduced-motion:reduce){.hero .sol,.sol-cab::after,.brillo::after,.sol-resp i{animation:none}.brillo::after{display:none}}
+/* v12.35: código de descuento (lo valida y calcula el servidor) */
+.cupon{margin:2px 0;font-size:14.5px}
+.cupon summary{cursor:pointer;color:var(--turq);font-weight:600;list-style:none;display:inline-flex;align-items:center;gap:6px}
+.cupon summary::-webkit-details-marker{display:none}
+.cupon summary::before{content:"%";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--turq);color:#fff;font:700 11px var(--f-mono)}
+.cupon-in{display:flex;gap:8px;margin-top:10px;max-width:420px}
+.cupon-c{flex:1;min-width:0;font:600 16px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:10px 12px;border:1.5px dashed var(--turq);border-radius:8px;background:#fff;color:var(--text)}
+.cupon-m{margin:8px 0 0;min-height:1em;font-weight:600}
+.cupon-m.si{color:var(--ok)}.cupon-m.no{color:var(--mag)}
+.dx .cupon summary{color:#7fd8e6}.dx .cupon summary::before{background:#7fd8e6;color:#0f3442}
+.dx .cupon .btn-s{border-color:rgba(255,255,255,.4);color:#fff}
+.dx .cupon-m.si{color:#5fe0a6}.dx .cupon-m.no{color:#ff9aa9}
+.eqs .cupon{margin:10px 0 16px}
+s.antes{opacity:.7;font-weight:400;margin-left:6px}
 </style>
 </head>
 <body>
@@ -551,6 +565,7 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
         <div class="eq-head"><img class="eq-foto" src="producto_clark.jpg" alt="Equipo de aire acondicionado split Clark: unidad interior y exterior" width="160" height="160"><div><h3 class="t">Equipos Clark: instalados o solo el equipo</h3>
         <p>Precios del Paquete verano, válidos hasta el 28-02-2027. Si no sabe qué capacidad necesita, use la calculadora de arriba.</p><p class="eq-conf">La misma empresa que mantiene tableros eléctricos de plantas industriales instala su equipo en su casa u oficina: técnicos con licencia SEC, circuito exclusivo según la normativa, garantía por escrito y factura o boleta.</p></div></div>
         <label class="eq-ent" for="eqEnt">Si compra solo el equipo, ¿cómo lo recibe?<select id="eqEnt"><option value="r">Retiro en Pudahuel, sin costo</option><option value="d">Despacho en la Región Metropolitana: $20.000</option></select></label>
+        <details class="cupon" hidden><summary>¿Tiene un código de descuento?</summary><div class="cupon-in"><input class="cupon-c" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej.: MR-7KQ4-PX9D" aria-label="Código de descuento"><button type="button" class="btn btn-s cupon-b">Aplicar</button></div><p class="cupon-m" role="status"></p></details>
         <div class="eq-grid">
           <article class="eq">
             <h4>Clark 9.000 BTU</h4>
@@ -591,6 +606,7 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
           <p class="nota">Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p>
           <div class="pasos" id="pasosDx">
             <div class="paso"><span>PASO 1</span><label for="dxN">Tableros a revisar <select id="dxN"><option value="1">1 tablero</option><option value="2">2 tableros</option><option value="3">3 tableros</option><option value="4">4 o más</option></select></label><b class="total" id="dxTotal">Total: $77.350 IVA incluido</b></div>
+            <details class="cupon" hidden><summary>¿Tiene un código de descuento?</summary><div class="cupon-in"><input class="cupon-c" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej.: MR-7KQ4-PX9D" aria-label="Código de descuento"><button type="button" class="btn btn-s cupon-b">Aplicar</button></div><p class="cupon-m" role="status"></p></details>
             <div class="paso"><span>PASO 2</span><a class="btn btn-p" id="btnPago" href="#cotizar">Pagar con Mercado Pago</a></div>
             <div class="paso"><span>PASO 3</span><b class="total">Con el pago aprobado, elija día y hora</b></div>
           </div>
@@ -672,12 +688,14 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
   const okMP = u => typeof u === 'string' && /^https:\/\/(link\.mercadopago\.cl|mpago\.la|www\.mercadopago\.cl)\//.test(u);
   const fmt$ = n => '$' + n.toLocaleString('es-CL');
   const pago = $('btnPago');
+  let cupon = null;   // {codigo, pct, precios}: lo entrega el servidor; la página no conoce ningún código
   // crea el cobro en Mercado Pago (precio fijo en el servidor) y lleva al cliente a pagar; al aprobarse vuelve a agendar.html
   function cobrar(producto, btn, msg){
     const txt = btn.textContent; btn.textContent = 'Abriendo Mercado Pago…'; btn.setAttribute('aria-busy', 'true');
     const fallo = e => { btn.textContent = txt; btn.removeAttribute('aria-busy'); if (msg) msg.textContent = e || 'No pudimos abrir el pago. Intente de nuevo o llámenos al +56 9 4153 1025.'; };
-    fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'pagar', producto, origen: (typeof origen === 'string' ? origen : '') }) })
-      .then(r => r.json()).then(d => { if (d.ok && /^https:\/\/(www\.)?mercadopago\.cl\//.test(d.url)) location.href = d.url; else fallo(d.error); }, () => fallo());
+    fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'pagar', producto, origen: (typeof origen === 'string' ? origen : ''), codigo: cupon ? cupon.codigo : '' }) })
+      .then(r => r.json()).then(d => { if (d.ok && /^https:\/\/(www\.)?mercadopago\.cl\//.test(d.url)) location.href = d.url;
+        else { if (cupon && d.error && /código/i.test(d.error)) quitarCupon(d.error); fallo(d.error); } }, () => fallo());
   }
   function dx(){
     const n = Number($('dxN').value);
@@ -687,8 +705,9 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
       pago.dataset.serv = 'Diagnóstico Express'; return;
     }
     delete pago.dataset.serv;
-    const total = Math.round((65000 + 25000 * (n - 1)) * 1.19);
-    $('dxTotal').textContent = 'Total: ' + fmt$(total) + ' IVA incluido';
+    const normal = Math.round((65000 + 25000 * (n - 1)) * 1.19);
+    const total = cupon && cupon.precios['dx' + n] ? cupon.precios['dx' + n] : normal;
+    $('dxTotal').innerHTML = 'Total: ' + fmt$(total) + ' IVA incluido' + (total < normal ? ' <s class="antes">' + fmt$(normal) + '</s>' : '');
     pago.dataset.prod = 'dx' + n;
     if (okPA) { pago.textContent = 'Pagar ' + fmt$(total) + ' con Mercado Pago'; pago.href = '#diagnostico'; pago.removeAttribute('target'); return; }
     const fijo = okMP(PAGOS[String(n)]) ? PAGOS[String(n)] : '';
@@ -717,7 +736,7 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
       document.querySelector('[data-eq-precio="' + b + '"]').textContent = fmt$(EQP[b] + (d ? DESP : 0));
       document.querySelector('[data-eq-ent="' + b + '"]').textContent = d ? 'IVA incluido · con despacho en la Región Metropolitana' : 'IVA incluido · retiro en Pudahuel';
       a.dataset.prod = k;
-      if (okPA) { a.href = '#equipos'; a.removeAttribute('target'); a.textContent = 'Pagar ' + fmt$(EQP[b] + (d ? DESP : 0)) + ' con Mercado Pago'; }
+      if (okPA) { a.href = '#equipos'; a.removeAttribute('target'); a.textContent = 'Pagar ' + fmt$(cupon && cupon.precios[k] ? cupon.precios[k] : EQP[b] + (d ? DESP : 0)) + ' con Mercado Pago'; }
       else if (okMP(u)) { a.href = u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Pagar ' + fmt$(EQP[b] + (d ? DESP : 0)) + ' con Mercado Pago'; }
       else { a.href = '#cotizar'; a.removeAttribute('target'); a.textContent = 'Comprar solo el equipo'; }
     });
@@ -731,6 +750,8 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
     elegir('Suministro de equipo de aire acondicionado');
   }));
   const EQI = { '9.000': 571200, '12.000': 690200, '18.000': 856800 };
+  function insAct(){ if (okPA) document.querySelectorAll('[data-eq-ins]').forEach(a => { const b = a.dataset.eqIns, k = 'i' + b.replace('.', '');
+    a.textContent = 'Pagar ' + fmt$(cupon && cupon.precios[k] ? cupon.precios[k] : EQI[b]) + ' instalado'; }); }
   document.querySelectorAll('[data-eq-ins]').forEach(a => {
     const b = a.dataset.eqIns, u = EQL['i' + b.replace('.', '')];
     if (okPA) { a.href = '#equipos'; a.textContent = 'Pagar ' + fmt$(EQI[b]) + ' instalado'; }
@@ -743,6 +764,28 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
       elegir('Instalación de aire acondicionado');
     });
   });
+  // código de descuento (v12.35): el servidor dice si sirve y cuánto queda; aquí solo se muestra
+  const cupones = [...document.querySelectorAll('.cupon')];
+  function cuponMsg(t, bien){ cupones.forEach(c => { const m = c.querySelector('.cupon-m'); m.textContent = t; m.className = 'cupon-m ' + (t ? (bien ? 'si' : 'no') : ''); }); }
+  function precios(){ dx(); eqAct(); insAct(); }
+  function quitarCupon(err){ cupon = null; cuponMsg(err || '', false); precios(); }
+  function aplicarCupon(c){
+    const inp = c.querySelector('.cupon-c'), btn = c.querySelector('.cupon-b'), cod = inp.value.trim();
+    if (!cod) { cuponMsg('Escriba su código.', false); return; }
+    btn.disabled = true; btn.textContent = 'Revisando…';
+    fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'codigo', codigo: cod }) })
+      .then(r => r.json()).then(d => {
+        if (d.ok && d.pct > 0 && d.precios) {
+          cupon = { codigo: cod, pct: d.pct, precios: d.precios };
+          cupones.forEach(x => { x.querySelector('.cupon-c').value = cod.toUpperCase(); x.open = true; });
+          cuponMsg('✓ Código aplicado: ' + d.pct + ' % de descuento. El precio ya está rebajado en el botón de pago.', true); precios();
+        } else quitarCupon(d.error || 'Código no válido o vencido.');
+      }, () => cuponMsg('No pudimos revisar el código. Intente de nuevo.', false))
+      .finally(() => { btn.disabled = false; btn.textContent = 'Aplicar'; });
+  }
+  if (okPA) cupones.forEach(c => { c.hidden = false;
+    c.querySelector('.cupon-b').addEventListener('click', () => aplicarCupon(c));
+    c.querySelector('.cupon-c').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); aplicarCupon(c); } }); });
   // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol
   const EQ = [9000, 12000, 18000, 24000, 36000, 48000, 60000];
   const fmt = n => n.toLocaleString('es-CL');
