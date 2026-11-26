@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t5Aye48ByXlqdmBphCuasp0ilG5nn73TkBzxDkM9hYg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ywZjlnvjdebAd6EgVA2esK5ZyLk2gK08mScwYDlWZSQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -238,6 +238,30 @@ section.s>.in{display:flex;flex-direction:column;gap:30px}
 .cn a{font-weight:600;font-size:14.5px;color:var(--turq);text-decoration:none;margin-top:4px}
 footer{background:var(--ink);color:var(--on-ink-mut);font-size:13.5px}
 footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:22px calc(22px + env(safe-area-inset-bottom,0px))}
+/* dos puertas: Empresas e industria / Hogar y locales (26-11-2026). Sin elegir se ve todo. */
+.puertas{background:var(--ink);color:var(--on-ink)}
+.puertas .in{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr) auto;gap:12px;align-items:stretch;padding-block:14px}
+.puertas .pq{align-self:center;font:500 12px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-mut);max-width:11ch}
+.pta{font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px;padding:13px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04);color:var(--on-ink)}
+.pta:hover{border-color:#fff}
+.pta b{font:700 21px/1.15 var(--f-disp);color:#fff;display:flex;align-items:center;gap:9px}
+.pta b svg{width:20px;height:20px;color:var(--turq);flex:none}
+.pta span{font-size:13.5px;line-height:1.4;color:var(--on-ink-mut)}
+.pta[aria-pressed="true"]{background:#fff;border-color:#fff}
+.pta[aria-pressed="true"] b{color:var(--ink)}
+.pta[aria-pressed="true"] span{color:var(--muted)}
+.ptodo{font:600 13.5px var(--f-body);background:none;border:0;color:var(--on-ink-mut);text-decoration:underline;cursor:pointer;align-self:center;padding:8px}
+.ptodo:hover{color:#fff}
+body:not([data-modo]) .ptodo{visibility:hidden}
+@media (max-width:760px){.puertas .in{grid-template-columns:1fr 1fr;gap:8px;padding-block:10px}.puertas .pq{grid-column:1/-1;max-width:none}.pta{padding:11px 12px}.pta b{font-size:18px}.pta span{font-size:12.5px}.ptodo{grid-column:1/-1;justify-self:start;padding:2px 0}}
+body[data-modo="emp"] [data-para="hog"],body[data-modo="hog"] [data-para="emp"]{display:none!important}
+@media (min-width:601px){body[data-modo] .serv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+body[data-modo="hog"] main{display:flex;flex-direction:column}
+body[data-modo="hog"] main>*{order:5}
+body[data-modo="hog"] main>.puertas,body[data-modo="hog"] main>.hero{order:0}
+body[data-modo="hog"] #aire{order:1}
+body[data-modo="hog"] #diagnostico{order:2}
+body[data-modo="hog"] #trabajos{order:3}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
@@ -246,7 +270,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   <div class="in">
     <a class="logo" href="#inicio" aria-label="Servicios MR, inicio"><img src="logo_mr.png" alt="Servicios MR" width="96" height="40"></a>
     <nav class="nav" aria-label="Secciones">
-      <a href="#servicios">Servicios</a><a href="#plan">Plan de mantención</a><a href="#aire">Aire acondicionado</a><a href="#diagnostico">Diagnóstico Express</a><a href="#preguntas">Preguntas</a><a href="#contacto">Contacto</a>
+      <a href="#servicios">Servicios</a><a href="#plan" data-para="emp">Plan de mantención</a><a href="#aire" data-para="hog">Aire acondicionado</a><a href="#diagnostico">Diagnóstico Express</a><a href="#preguntas">Preguntas</a><a href="#contacto">Contacto</a>
     </nav>
     <a class="tel" href="tel:+56941531025"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span>+56 9 4153 1025</span></a>
     <a class="btn btn-p" href="#cotizar">Cotizar</a>
@@ -254,12 +278,20 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 </header>
 
 <main id="inicio">
+  <div class="puertas" role="group" aria-label="Elija su caso">
+    <div class="in">
+      <span class="pq">¿Para quién es?</span>
+      <button type="button" class="pta" data-modo="emp" aria-pressed="false"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l6 4V9l6 4V5l6 3v13z"/></svg>Empresas e industria</b><span>Tableros, mantención anual, termografía y TE1</span></button>
+      <button type="button" class="pta" data-modo="hog" aria-pressed="false"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v10H3z"/><path d="M9 21v-6h6v6"/></svg>Hogar y locales</b><span>Aire Clark instalado y Diagnóstico: pague en línea</span></button>
+      <button type="button" class="ptodo" id="pTodo">Ver todo</button>
+    </div>
+  </div>
   <section class="hero" id="cotizar">
     <div class="in">
       <div>
         <span class="k">Ingeniería eléctrica · Climatización</span>
-        <h1>Instalaciones eléctricas seguras y <em>climatización eficiente</em> para empresas y hogares.</h1>
-        <p class="lead">Mantención preventiva y correctiva de tableros eléctricos, normalización de instalaciones, termografía infrarroja y suministro e instalación de equipos de climatización. Ejecutamos cada trabajo conforme a los Pliegos Técnicos RIC de la SEC y lo respaldamos con un informe técnico.</p>
+        <h1 id="hTit">Instalaciones eléctricas seguras y <em>climatización eficiente</em> para empresas y hogares.</h1>
+        <p class="lead" id="hLead">Mantención preventiva y correctiva de tableros eléctricos, normalización de instalaciones, termografía infrarroja y suministro e instalación de equipos de climatización. Ejecutamos cada trabajo conforme a los Pliegos Técnicos RIC de la SEC y lo respaldamos con un informe técnico.</p>
         <ul class="pruebas">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Contrato industrial vigente</b><span>Mantención eléctrica para Bosch Rexroth Chile.</span></div></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Cotización por escrito</b><span>Alcances, materiales y plazos definidos.</span></div></li>
@@ -293,21 +325,21 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 
   <section class="s" id="servicios">
     <div class="in">
-      <div class="sh"><span class="k">Servicios</span><h2>Servicios en terreno</h2><p>Para industrias, centros de distribución, oficinas, comercio y viviendas.</p></div>
+      <div class="sh"><span class="k">Servicios</span><h2>Servicios en terreno</h2><p id="servSub">Para industrias, centros de distribución, oficinas, comercio y viviendas.</p></div>
       <div class="serv">
-        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></i>
+        <article class="sv" data-para="emp"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></i>
           <h3>Mantención de tableros eléctricos</h3><p>Preventiva y correctiva, con pauta de inspección y registro por tablero.</p>
           <ul><li>Reapriete de conexiones y limpieza</li><li>Prueba de protectores diferenciales</li><li>Medición de resistencia de aislación</li></ul><a href="#cotizar" data-serv="Mantención de tableros">Cotizar mantención</a></article>
         <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M8 8v8M12 8v8M16 8v8"/></svg></i>
           <h3>Reposición y normalización de tableros</h3><p>Gabinetes nuevos, ordenados y rotulados, con capacidad de reserva.</p>
           <ul><li>25 % de espacio de reserva</li><li>Tapas troqueladas y prensaestopas</li><li>Plano unilineal actualizado</li></ul><a href="#cotizar" data-serv="Reposición o normalización de tablero">Cotizar tablero</a></article>
-        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10"/><circle cx="12" cy="17" r="4"/><path d="M8 7H6M8 11H6"/></svg></i>
+        <article class="sv" data-para="emp"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v10"/><circle cx="12" cy="17" r="4"/><path d="M8 7H6M8 11H6"/></svg></i>
           <h3>Termografía infrarroja</h3><p>Detección de puntos calientes antes de que se conviertan en una falla o un incendio.</p>
           <ul><li>Informe por punto inspeccionado con temperatura</li><li>Prioridad de intervención</li></ul><a href="#cotizar" data-serv="Termografía">Cotizar termografía</a></article>
-        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17c0 2 2 2 2 4M12 17c0 2 2 2 2 4M17 17c0 2 2 2 2 4"/></svg></i>
+        <article class="sv" data-para="hog"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17c0 2 2 2 2 4M12 17c0 2 2 2 2 4M17 17c0 2 2 2 2 4"/></svg></i>
           <h3>Instalación de aire acondicionado</h3><p>Equipos split para viviendas, oficinas y locales, con circuito eléctrico exclusivo.</p>
           <ul><li>Líneas de refrigerante, cable de control y drenaje</li><li>Alimentación con protección dedicada</li></ul><a href="#cotizar" data-serv="Instalación de aire acondicionado">Cotizar instalación</a></article>
-        <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></i>
+        <article class="sv" data-para="hog"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18l-2 12H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg></i>
           <h3>Suministro de equipos de aire acondicionado</h3><p>Dimensionamiento de la capacidad y entrega del equipo instalado y probado.</p>
           <ul><li>Cálculo de capacidad (BTU) según el recinto</li><li>Equipo e instalación en una sola cotización</li><li>Midea, Samsung, LG, Kendal, Anwo y Clark</li></ul><a href="#aire">Calcular capacidad</a></article>
         <article class="sv"><i class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg></i>
@@ -317,7 +349,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     </div>
   </section>
 
-  <section class="s" id="plan" style="padding-top:0">
+  <section class="s" id="plan" data-para="emp" style="padding-top:0">
     <div class="in">
       <div class="plan">
         <div>
@@ -338,7 +370,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
     </div>
   </section>
 
-  <section class="s" id="aire" style="background:var(--card);border-block:1px solid var(--line)">
+  <section class="s" id="aire" data-para="hog" style="background:var(--card);border-block:1px solid var(--line)">
     <div class="in">
       <div class="sh"><span class="k">Aire acondicionado</span><h2>Capacidad correcta e instalación conforme a norma</h2><p>Un equipo subdimensionado no alcanza la temperatura y uno sobredimensionado consume de más. Use la calculadora como referencia; la capacidad definitiva se confirma en la visita técnica. En temporada de verano programamos hasta 5 instalaciones por semana, por orden de solicitud.</p></div>
       <div class="ac-grid">
@@ -440,13 +472,13 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
       <div class="sh"><span class="k">Preguntas frecuentes</span><h2>Consultas habituales</h2></div>
       <div class="faq">
         <details><summary>¿Cuál es el valor de una revisión de tablero?</summary><p>El Diagnóstico Express tiene un valor de $65.000 + IVA ($77.350 IVA incluido) por un tablero y $25.000 + IVA ($29.750 IVA incluido) por cada tablero adicional. Si contrata la reparación o la regularización dentro de 15 días, el valor del diagnóstico se descuenta.</p></details>
-        <details><summary>¿Por qué operan las protecciones de mi tablero?</summary><p>Las causas más frecuentes son sobrecarga, cortocircuito o una corriente de fuga a tierra (humedad o aislación dañada), que hace operar al protector diferencial. En la visita se realizan mediciones para identificar la causa. Nunca se debe aumentar la capacidad de un interruptor automático sin verificar la sección del conductor que protege.</p></details>
+        <details data-para="hog"><summary>¿Por qué operan las protecciones de mi tablero?</summary><p>Las causas más frecuentes son sobrecarga, cortocircuito o una corriente de fuga a tierra (humedad o aislación dañada), que hace operar al protector diferencial. En la visita se realizan mediciones para identificar la causa. Nunca se debe aumentar la capacidad de un interruptor automático sin verificar la sección del conductor que protege.</p></details>
         <details><summary>¿Qué es el TE1 y cuándo se requiere?</summary><p>Es la declaración de una instalación eléctrica interior ante la SEC. Se exige en instalaciones nuevas, ampliaciones, aumentos de capacidad del empalme y, con frecuencia, en procesos de arriendo, venta o patente comercial. La presenta un instalador eléctrico autorizado por la SEC.</p></details>
-        <details><summary>¿Qué capacidad de aire acondicionado requiere mi recinto?</summary><p>Depende de la superficie, la exposición solar y el uso del recinto. La calculadora de esta página entrega una referencia; la capacidad definitiva se confirma en la visita técnica.</p></details>
+        <details data-para="hog"><summary>¿Qué capacidad de aire acondicionado requiere mi recinto?</summary><p>Depende de la superficie, la exposición solar y el uso del recinto. La calculadora de esta página entrega una referencia; la capacidad definitiva se confirma en la visita técnica.</p></details>
         <details><summary>¿Con qué frecuencia se debe revisar un tablero eléctrico?</summary><p>Una vez al año en viviendas y dos veces al año en locales, oficinas e industrias. También corresponde revisarlo si las protecciones operan con frecuencia, si hay olor a quemado o si se incorporaron equipos nuevos.</p></details>
         <details><summary>¿Con qué frecuencia se mantiene un equipo de aire acondicionado?</summary><p>Una vez al año en viviendas y dos veces al año en locales, oficinas e industrias. La mantención incluye limpieza de filtros y serpentines, revisión del drenaje y de la alimentación eléctrica, lo que mejora la eficiencia y prolonga la vida útil del equipo.</p></details>
         <details><summary>¿Los trabajos tienen garantía?</summary><p>Sí. La mano de obra tiene la garantía legal de 3 meses desde la entrega del trabajo. Los equipos de aire acondicionado que suministramos tienen la garantía legal de 6 meses desde su entrega. Ambas quedan indicadas por escrito en cada cotización.</p></details>
-        <details><summary>¿Atienden a empresas?</summary><p>Sí. Ofrecemos planes de mantención con visitas programadas, termografía y reposición de tableros para industrias, bodegas y comercio, con informe técnico por intervención. Para tableros industriales o de fuerza, seleccione «Plan de mantención para empresas» o «Mantención de tableros» en el formulario y enviaremos una cotización formal.</p></details>
+        <details data-para="emp"><summary>¿Atienden a empresas?</summary><p>Sí. Ofrecemos planes de mantención con visitas programadas, termografía y reposición de tableros para industrias, bodegas y comercio, con informe técnico por intervención. Para tableros industriales o de fuerza, seleccione «Plan de mantención para empresas» o «Mantención de tableros» en el formulario y enviaremos una cotización formal.</p></details>
       </div>
     </div>
   </section>
@@ -574,6 +606,40 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
       if (o) sessionStorage.setItem('mrOrigen', o);
       return sessionStorage.getItem('mrOrigen') || '';
     } catch (e) { return ''; }
+  })();
+  // dos puertas (26-11-2026): Empresas e industria / Hogar y locales. Sin elegir se ve todo.
+  // Entra elegido con ?para=empresas|hogar, con un anuncio cuya campaña diga "aire", o con lo que eligió antes en esta pestaña.
+  const hTit = $('hTit'), hLead = $('hLead');
+  const MODOS = {
+    emp: { tit: 'Mantención eléctrica para <em>industrias, bodegas y comercio</em>.', lead: 'Mantención preventiva y correctiva de tableros eléctricos, reposición y normalización, termografía infrarroja, plan de mantención anual y declaración TE1. Cotización formal por escrito y un informe técnico en cada trabajo, conforme a los Pliegos Técnicos RIC de la SEC.', tipo: 'Empresa o industria', serv: 'Mantención de tableros', sub: 'Para industrias, centros de distribución, bodegas, oficinas y comercio.', ir: 'servicios' },
+    hog: { tit: 'Aire acondicionado instalado y <em>tableros eléctricos seguros</em> para su hogar o local.', lead: 'Equipos Clark instalados con precio fijo y Diagnóstico Express de su tablero: pague en línea con Mercado Pago y elija día y hora. Técnicos con licencia SEC, circuito exclusivo y trabajo conforme a los Pliegos Técnicos RIC.', tipo: 'Vivienda', serv: 'Instalación de aire acondicionado', sub: 'Para viviendas, oficinas y locales comerciales.', ir: 'aire' },
+  };
+  const base = { tit: hTit.innerHTML, lead: hLead.textContent, sub: $('servSub').textContent };
+  function modo(m, ir){
+    const M = MODOS[m];
+    if (M) document.body.dataset.modo = m; else delete document.body.dataset.modo;
+    document.querySelectorAll('.pta').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.modo === m)));
+    hTit.innerHTML = M ? M.tit : base.tit; hLead.textContent = M ? M.lead : base.lead;
+    $('servSub').textContent = M ? M.sub : base.sub;
+    const t = $('cTipo'), sv = $('cSer'); if (M && !t.dataset.tocado) t.value = M.tipo; if (M && !sv.dataset.tocado) sv.value = M.serv;
+    try { if (M) sessionStorage.setItem('mrModo', m); else sessionStorage.removeItem('mrModo'); } catch (e) {}
+    if (ir && M) $(M.ir).scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }
+  ['cTipo', 'cSer'].forEach(id => $(id).addEventListener('change', () => { $(id).dataset.tocado = '1'; }));
+  document.querySelectorAll('.pta').forEach(b => b.addEventListener('click', () => modo(b.dataset.modo, true)));
+  $('pTodo').addEventListener('click', () => modo(''));
+  (() => {
+    let m = '';
+    try {
+      const q = new URLSearchParams(location.search), p = (q.get('para') || '').toLowerCase();
+      if (/^(empresa|empresas|industria)$/.test(p)) m = 'emp';
+      else if (/^(hogar|casa|local|locales)$/.test(p)) m = 'hog';
+      else if (/aire|clima|split/i.test(q.get('utm_campaign') || '')) m = 'hog';
+      else if (/^#(aire|equipos)$/.test(location.hash)) m = 'hog';
+      else if (/^#plan$/.test(location.hash)) m = 'emp';
+      else m = sessionStorage.getItem('mrModo') || '';
+    } catch (e) {}
+    if (m) modo(m);
   })();
   // envío: llega a Servicios MR (Drive -> Jarvis -> Panel y celular de Iván)
   $('cot').addEventListener('submit', ev => {
