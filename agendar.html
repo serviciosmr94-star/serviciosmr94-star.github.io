@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-75P73LhiMBjUN9+FgjDW0lwo8sF4Gasuj085ZP9ezNE='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Elegir día y hora · Servicios MR</title>
+<link rel="icon" href="logo_mr.png">
+<style>
+:root{--ink:#0F2A3A;--text:#16242E;--muted:#55656F;--line:#D7DEE3;--paper:#F5F7F8;--card:#fff;--turq:#1B7A99;--turq-soft:#E3F0F5;--mag:#C8264B;--ok:#2E7D5B}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--text);background:var(--paper)}
+header{background:var(--card);border-bottom:1px solid var(--line)}header .in{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.in{max-width:860px;margin:0 auto;padding:16px 20px}header img{height:42px;display:block}header a{color:var(--turq);font-weight:600;text-decoration:none}
+h1{font-size:clamp(24px,4vw,32px);margin:8px 0 4px;line-height:1.15}.sub{color:var(--muted);margin:0 0 20px}
+.caja{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin:0 0 18px}
+.dia{margin:0 0 14px}.dia h3{margin:0 0 8px;font-size:15px;text-transform:capitalize;color:var(--muted)}
+.horas{display:flex;flex-wrap:wrap;gap:8px}.horas button{font:inherit;font-size:15px;padding:9px 14px;border-radius:8px;border:1.5px solid var(--line);background:#fff;color:var(--text);cursor:pointer}
+.horas button[aria-pressed=true]{border-color:var(--turq);background:var(--turq-soft);color:var(--turq);font-weight:700}
+label{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted);margin:0 0 12px}
+input,textarea{font:inherit;font-size:16px;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;width:100%;background:var(--paper)}
+.fila{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.fila{grid-template-columns:1fr}}
+.btn{display:inline-flex;justify-content:center;font:600 16px system-ui,sans-serif;padding:14px 22px;border-radius:8px;border:0;background:var(--mag);color:#fff;cursor:pointer;width:100%}
+.btn[disabled]{opacity:.6;cursor:default}.msg{font-weight:600;margin:12px 0 0}.msg.err{color:var(--mag)}.ok{border-color:var(--ok)}.ok h2{color:var(--ok);margin-top:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><div class="in"><a href="./"><img src="logo_mr.png" alt="Servicios MR"></a><a href="tel:+56941531025">+56 9 4153 1025</a></div></header>
+<main class="in">
+  <h1 id="tit">Revisando su pago…</h1>
+  <p class="sub" id="sub">Un momento: confirmamos con Mercado Pago que el pago está aprobado.</p>
+  <div class="caja" id="err" hidden><p id="errTxt"></p><p><a href="./">Volver a la página</a> · Llámenos: <a href="tel:+56941531025">+56 9 4153 1025</a></p></div>
+  <form id="f" hidden novalidate>
+    <div class="caja"><h2 style="margin-top:0;font-size:20px">1. Elija día y hora de <span id="clase"></span></h2><div id="dias"></div></div>
+    <div class="caja"><h2 style="margin-top:0;font-size:20px">2. Sus datos</h2>
+      <div class="fila"><label>Nombre y apellido<input id="nom" autocomplete="name" maxlength="80"></label>
+      <label>Teléfono<input id="tel" type="tel" autocomplete="tel" maxlength="30" placeholder="+56 9 ..."></label></div>
+      <label>Correo (le llega la confirmación al calendario)<input id="mail" type="email" autocomplete="email" maxlength="80"></label>
+      <label id="lDir">Dirección y comuna<input id="dir" autocomplete="street-address" maxlength="160"></label>
+      <label>Algo que debamos saber (opcional)<textarea id="det" rows="2" maxlength="500"></textarea></label>
+      <button class="btn" id="btn" type="submit">Confirmar hora</button><p class="msg" id="msg" role="status"></p>
+    </div>
+  </form>
+  <div class="caja ok" id="listo" hidden><h2>Hora confirmada</h2><p id="listoTxt"></p><p>Si necesita cambiarla, llámenos al <a href="tel:+56941531025">+56 9 4153 1025</a>.</p></div>
+</main>
+<script>
+(function(){
+  const PA = '';
+  const $ = id => document.getElementById(id);
+  const ref = new URLSearchParams(location.search).get('ref') || '';
+  let elegida = '', clase = '';
+  const error = t => { $('tit').textContent = 'No podemos agendar todavía'; $('sub').textContent = ''; $('errTxt').textContent = t; $('err').hidden = false; };
+  if (!/^MR[A-Za-z0-9]{20}$/.test(ref) || PA.indexOf('https://script.google.com/') !== 0) { error('Este enlace no es válido. Para agendar primero debe pagar en www.serviciosmr.cl.'); return; }
+  const fdia = ymd => new Date(ymd + 'T12:00:00').toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long' });
+  fetch(PA + '?accion=estado&ref=' + encodeURIComponent(ref)).then(r => r.json()).then(d => {
+    if (!d.ok) { error(d.error || 'No encontramos el pago.'); return; }
+    if (d.agendado) { $('tit').textContent = 'Su hora ya está agendada'; $('sub').textContent = d.producto; $('listoTxt').textContent = d.cita; $('listo').hidden = false; return; }
+    $('tit').textContent = 'Pago aprobado: elija su hora'; $('sub').textContent = d.producto; clase = d.clase; $('clase').textContent = d.clase;
+    if (/retiro/.test(d.clase)) { $('lDir').hidden = true; }
+    if (!d.horas.length) { error('Pago aprobado, pero no quedan horas libres en los próximos 14 días. Llámenos al +56 9 4153 1025 y le damos una.'); return; }
+    const porDia = {};
+    d.horas.forEach(h => (porDia[h.dia] = porDia[h.dia] || []).push(h));
+    Object.keys(porDia).forEach(k => {
+      const box = document.createElement('div'); box.className = 'dia';
+      const h3 = document.createElement('h3'); h3.textContent = fdia(k); box.appendChild(h3);
+      const hs = document.createElement('div'); hs.className = 'horas';
+      porDia[k].forEach(h => { const b = document.createElement('button'); b.type = 'button'; b.textContent = h.texto; b.setAttribute('aria-pressed', 'false');
+        b.addEventListener('click', () => { document.querySelectorAll('.horas button').forEach(x => x.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); elegida = h.inicio; });
+        hs.appendChild(b); });
+      box.appendChild(hs); $('dias').appendChild(box);
+    });
+    $('f').hidden = false;
+  }, () => error('No pudimos revisar el pago. Recargue la página en un momento o llámenos al +56 9 4153 1025.'));
+  $('f').addEventListener('submit', ev => {
+    ev.preventDefault();
+    const v = id => $(id).value.trim(), m = $('msg'); m.className = 'msg err';
+    if (!elegida) { m.textContent = 'Elija un día y hora.'; return; }
+    if (!v('nom') || !v('tel')) { m.textContent = 'Indique su nombre y teléfono.'; return; }
+    if (!/retiro/.test(clase) && !v('dir')) { m.textContent = 'Indique la dirección y comuna.'; return; }
+    const btn = $('btn'); btn.disabled = true; btn.textContent = 'Agendando…';
+    fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'agendar', ref,
+      inicio: elegida, nombre: v('nom'), telefono: v('tel'), correo: v('mail'), direccion: v('dir'), detalle: v('det') }) })
+      .then(r => r.json()).then(d => {
+        if (!d.ok) { m.textContent = d.error || 'No se pudo agendar.'; btn.disabled = false; btn.textContent = 'Confirmar hora'; return; }
+        $('f').hidden = true; $('tit').textContent = 'Listo, quedó agendado'; $('sub').textContent = d.producto;
+        $('listoTxt').textContent = d.cita; $('listo').hidden = false;
+      }, () => { m.textContent = 'No se pudo agendar. Intente de nuevo o llámenos al +56 9 4153 1025.'; btn.disabled = false; btn.textContent = 'Confirmar hora'; });
+  });
+})();
+</script>
+</body>
+</html>
