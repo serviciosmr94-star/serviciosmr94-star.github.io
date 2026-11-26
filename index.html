@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bLiTfQSgRGc1NZzL0tOpjOZGa34Wj8Ysj12cqxr//Bs='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-AosR0d4ohPQ2sGx2uoZHGYHcYL/JEGZsxWnGtrJ2F0g='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -449,7 +449,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
 <script>
 (function(){
   const FORM = 'https://script.google.com/macros/s/AKfycbxyyqgsIaAi4kOp1kje4KWQQb4IX4suFT_5td-b93nScNfaQxdR0Y9JPN6tyleoKQtT/exec';     // Apps Script "Formulario web MR" (termina en /exec)
-  const PA = ''; // Apps Script "Pago y agenda MR": cobra con precio fijo y abre la agenda SOLO con pago aprobado
+  const PA = 'https://script.google.com/macros/s/AKfycbwhXTMYRZH27Rx0hUGyU8itA6Ob0RzsJVAcq9pmgwB6-REHRATVe7K-aXDOoF5CW1Ig/exec'; // Apps Script "Pago y agenda MR": cobra con precio fijo y abre la agenda SOLO con pago aprobado
   const okPA = PA.indexOf('https://script.google.com/') === 0;
   const $ = id => document.getElementById(id);
   const PAGO = 'https://link.mercadopago.cl/serviciosmr';    // link de cobro general de Mercado Pago (web/pago_url.txt)
