@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ywZjlnvjdebAd6EgVA2esK5ZyLk2gK08mScwYDlWZSQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-j/GSRPtWvvtp9iRL2AoWqJKJ3+Pob0VGtbjb28V+58M='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -238,7 +238,7 @@ section.s>.in{display:flex;flex-direction:column;gap:30px}
 .cn a{font-weight:600;font-size:14.5px;color:var(--turq);text-decoration:none;margin-top:4px}
 footer{background:var(--ink);color:var(--on-ink-mut);font-size:13.5px}
 footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding-block:22px calc(22px + env(safe-area-inset-bottom,0px))}
-/* dos puertas: Empresas e industria / Hogar y locales (26-11-2026). Sin elegir se ve todo. */
+/* dos puertas: Empresas e industria / Hogar, oficina o local (26-11-2026). Sin elegir se ve todo. */
 .puertas{background:var(--ink);color:var(--on-ink)}
 .puertas .in{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1fr) auto;gap:12px;align-items:stretch;padding-block:14px}
 .puertas .pq{align-self:center;font:500 12px/1.3 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-mut);max-width:11ch}
@@ -282,7 +282,7 @@ body[data-modo="hog"] #trabajos{order:3}
     <div class="in">
       <span class="pq">¿Para quién es?</span>
       <button type="button" class="pta" data-modo="emp" aria-pressed="false"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l6 4V9l6 4V5l6 3v13z"/></svg>Empresas e industria</b><span>Tableros, mantención anual, termografía y TE1</span></button>
-      <button type="button" class="pta" data-modo="hog" aria-pressed="false"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v10H3z"/><path d="M9 21v-6h6v6"/></svg>Hogar y locales</b><span>Aire Clark instalado y Diagnóstico: pague en línea</span></button>
+      <button type="button" class="pta" data-modo="hog" aria-pressed="false"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v10H3z"/><path d="M9 21v-6h6v6"/></svg>Hogar, oficina o local</b><span>Aire Clark instalado y Diagnóstico: pague en línea</span></button>
       <button type="button" class="ptodo" id="pTodo">Ver todo</button>
     </div>
   </div>
@@ -607,12 +607,12 @@ body[data-modo="hog"] #trabajos{order:3}
       return sessionStorage.getItem('mrOrigen') || '';
     } catch (e) { return ''; }
   })();
-  // dos puertas (26-11-2026): Empresas e industria / Hogar y locales. Sin elegir se ve todo.
+  // dos puertas (26-11-2026): Empresas e industria / Hogar, oficina o local. Sin elegir se ve todo.
   // Entra elegido con ?para=empresas|hogar, con un anuncio cuya campaña diga "aire", o con lo que eligió antes en esta pestaña.
   const hTit = $('hTit'), hLead = $('hLead');
   const MODOS = {
     emp: { tit: 'Mantención eléctrica para <em>industrias, bodegas y comercio</em>.', lead: 'Mantención preventiva y correctiva de tableros eléctricos, reposición y normalización, termografía infrarroja, plan de mantención anual y declaración TE1. Cotización formal por escrito y un informe técnico en cada trabajo, conforme a los Pliegos Técnicos RIC de la SEC.', tipo: 'Empresa o industria', serv: 'Mantención de tableros', sub: 'Para industrias, centros de distribución, bodegas, oficinas y comercio.', ir: 'servicios' },
-    hog: { tit: 'Aire acondicionado instalado y <em>tableros eléctricos seguros</em> para su hogar o local.', lead: 'Equipos Clark instalados con precio fijo y Diagnóstico Express de su tablero: pague en línea con Mercado Pago y elija día y hora. Técnicos con licencia SEC, circuito exclusivo y trabajo conforme a los Pliegos Técnicos RIC.', tipo: 'Vivienda', serv: 'Instalación de aire acondicionado', sub: 'Para viviendas, oficinas y locales comerciales.', ir: 'aire' },
+    hog: { tit: 'Aire acondicionado instalado y <em>tableros eléctricos seguros</em> para su hogar, oficina o local.', lead: 'Equipos Clark instalados con precio fijo y Diagnóstico Express de su tablero: pague en línea con Mercado Pago y elija día y hora. Técnicos con licencia SEC, circuito exclusivo y trabajo conforme a los Pliegos Técnicos RIC.', tipo: 'Vivienda', serv: 'Instalación de aire acondicionado', sub: 'Para viviendas, oficinas y locales comerciales.', ir: 'aire' },
   };
   const base = { tit: hTit.innerHTML, lead: hLead.textContent, sub: $('servSub').textContent };
   function modo(m, ir){
