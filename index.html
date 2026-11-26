@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-AosR0d4ohPQ2sGx2uoZHGYHcYL/JEGZsxWnGtrJ2F0g='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-t5Aye48ByXlqdmBphCuasp0ilG5nn73TkBzxDkM9hYg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -16,6 +16,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Electrician", "name": "Servicios MR · Electricidad Industrial", "alternateName": ["Servicios MR", "MR Servicios"], "legalName": "Iván Patricio Morales Roldán E.I.R.L.", "taxID": "77.678.795-7", "telephone": "+56941531025", "address": {"@type": "PostalAddress", "addressLocality": "Pudahuel", "addressRegion": "Región Metropolitana", "addressCountry": "CL"}, "areaServed": ["Santiago", "Concepción", "Antofagasta"], "description": "Mantención eléctrica industrial, tableros, termografía e instalación y venta de aire acondicionado.", "url": "https://www.serviciosmr.cl/", "email": "ivan.m@serviciosmr.cl", "sameAs": ["https://www.linkedin.com/company/serviciosmr-cl"]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Aire acondicionado Clark 9.000 BTU instalado (Paquete verano)", "brand": {"@type": "Brand", "name": "Clark"}, "description": "Equipo split Clark 9.000 BTU instalado en Santiago: hasta 3 m de cañería, circuito eléctrico exclusivo con automático y diferencial, y puesta en marcha. Garantía 6 meses equipo y 3 meses mano de obra.", "url": "https://www.serviciosmr.cl/#equipos", "offers": {"@type": "Offer", "price": "571200", "priceCurrency": "CLP", "url": "https://www.serviciosmr.cl/#equipos", "seller": {"@type": "Organization", "name": "Servicios MR · Electricidad Industrial"}}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Aire acondicionado Clark 12.000 BTU instalado (Paquete verano)", "brand": {"@type": "Brand", "name": "Clark"}, "description": "Equipo split Clark 12.000 BTU instalado en Santiago: hasta 3 m de cañería, circuito eléctrico exclusivo con automático y diferencial, y puesta en marcha. Garantía 6 meses equipo y 3 meses mano de obra.", "url": "https://www.serviciosmr.cl/#equipos", "offers": {"@type": "Offer", "price": "690200", "priceCurrency": "CLP", "url": "https://www.serviciosmr.cl/#equipos", "seller": {"@type": "Organization", "name": "Servicios MR · Electricidad Industrial"}}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Product", "name": "Aire acondicionado Clark 18.000 BTU instalado (Paquete verano)", "brand": {"@type": "Brand", "name": "Clark"}, "description": "Equipo split Clark 18.000 BTU instalado en Santiago: hasta 3 m de cañería, circuito eléctrico exclusivo con automático y diferencial, y puesta en marcha. Garantía 6 meses equipo y 3 meses mano de obra.", "url": "https://www.serviciosmr.cl/#equipos", "offers": {"@type": "Offer", "price": "856800", "priceCurrency": "CLP", "url": "https://www.serviciosmr.cl/#equipos", "seller": {"@type": "Organization", "name": "Servicios MR · Electricidad Industrial"}}}</script>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <style>
 /* Layout: ficha técnica clara. La portada ES la solicitud de cotización (formulario a la vista), luego servicios como fichas, Diagnóstico Express con precio y agenda, preguntas frecuentes y cierre con teléfono, correo y agenda. */
@@ -165,8 +168,16 @@ section.s>.in{display:flex;flex-direction:column;gap:30px}
 .eq .op small{color:var(--muted);font-size:13.5px}
 .eq .op .btn{white-space:normal;text-align:center}
 .eqs .msg-pago{margin:12px 0 0;font-weight:600;color:var(--mag)}
+.eq .cuotas{font-weight:600;color:var(--turq)!important}
 .eq .ahorro{margin:0;font-size:13.5px;font-weight:600;color:var(--ok)}
 .eqs .nota{font-size:13.5px;color:var(--muted);margin:14px 0 0}
+
+/* trabajos realizados (fotos reales de MR, v12.32) */
+.trab{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.trab{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.trab figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.trab img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.trab figcaption{padding:10px 12px;font-size:14px;color:var(--muted)}
 
 /* diagnóstico express */
 .dx{background:var(--ink);color:var(--on-ink);border-radius:16px;padding:34px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
@@ -350,19 +361,19 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
         <div class="eq-grid">
           <article class="eq">
             <h4>Clark 9.000 BTU</h4>
-            <div class="op dest"><span>Instalado · recomendado</span><b>$571.200</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><a class="btn btn-p" href="#cotizar" data-eq-ins="9.000">Pagar instalación</a></div>
+            <div class="op dest"><span>Instalado · recomendado</span><b>$571.200</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><small class="cuotas">Hasta 12 cuotas con tarjeta de crédito (Mercado Pago)</small><a class="btn btn-p" href="#cotizar" data-eq-ins="9.000">Pagar instalación</a></div>
             <p class="ahorro">Instalado le cuesta solo $100.000 más que el equipo solo.</p>
             <div class="op"><span>Solo equipo</span><b data-eq-precio="9.000">$471.200</b><small data-eq-ent="9.000">IVA incluido · retiro en Pudahuel</small><a class="btn btn-s" href="#cotizar" data-eq-solo="9.000">Comprar solo el equipo</a></div>
           </article>
           <article class="eq">
             <h4>Clark 12.000 BTU</h4>
-            <div class="op dest"><span>Instalado · recomendado</span><b>$690.200</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><a class="btn btn-p" href="#cotizar" data-eq-ins="12.000">Pagar instalación</a></div>
+            <div class="op dest"><span>Instalado · recomendado</span><b>$690.200</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><small class="cuotas">Hasta 12 cuotas con tarjeta de crédito (Mercado Pago)</small><a class="btn btn-p" href="#cotizar" data-eq-ins="12.000">Pagar instalación</a></div>
             <p class="ahorro">Instalado le cuesta solo $100.000 más que el equipo solo.</p>
             <div class="op"><span>Solo equipo</span><b data-eq-precio="12.000">$590.200</b><small data-eq-ent="12.000">IVA incluido · retiro en Pudahuel</small><a class="btn btn-s" href="#cotizar" data-eq-solo="12.000">Comprar solo el equipo</a></div>
           </article>
           <article class="eq">
             <h4>Clark 18.000 BTU</h4>
-            <div class="op dest"><span>Instalado · recomendado</span><b>$856.800</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><a class="btn btn-p" href="#cotizar" data-eq-ins="18.000">Pagar instalación</a></div>
+            <div class="op dest"><span>Instalado · recomendado</span><b>$856.800</b><small>IVA incluido. Equipo, hasta 3 m de cañería, circuito exclusivo con automático y diferencial, y puesta en marcha.</small><small class="cuotas">Hasta 12 cuotas con tarjeta de crédito (Mercado Pago)</small><a class="btn btn-p" href="#cotizar" data-eq-ins="18.000">Pagar instalación</a></div>
             <p class="ahorro">Instalado le cuesta solo $100.000 más que el equipo solo.</p>
             <div class="op"><span>Solo equipo</span><b data-eq-precio="18.000">$756.800</b><small data-eq-ent="18.000">IVA incluido · retiro en Pudahuel</small><a class="btn btn-s" href="#cotizar" data-eq-solo="18.000">Comprar solo el equipo</a></div>
           </article>
@@ -373,6 +384,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
       </div>
     </div>
   </section>
+
 
   <section class="s" id="diagnostico">
     <div class="in">
@@ -388,7 +400,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
             <div class="paso"><span>PASO 2</span><a class="btn btn-p" id="btnPago" href="#cotizar">Pagar con Mercado Pago</a></div>
             <div class="paso"><span>PASO 3</span><b class="total">Con el pago aprobado, elige día y hora</b></div>
           </div>
-          <p class="nota" id="agendaNota">Pague en línea con tarjeta de débito o crédito en la página segura de Mercado Pago. Al aprobarse el pago vuelve a esta página y elige día y hora: la agenda solo se abre con el pago confirmado.</p>
+          <p class="nota" id="agendaNota">Pague en línea con tarjeta de débito o crédito (hasta 12 cuotas con crédito) en la página segura de Mercado Pago. Al aprobarse el pago vuelve a esta página y elige día y hora: la agenda solo se abre con el pago confirmado.</p>
           <div class="ctas otros"><a class="btn btn-s" href="#cotizar" data-serv="Diagnóstico Express">Prefiero que me contacten</a></div>
         </div>
         <div>
@@ -461,7 +473,7 @@ footer .in{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betwee
   function cobrar(producto, btn, msg){
     const txt = btn.textContent; btn.textContent = 'Abriendo Mercado Pago…'; btn.setAttribute('aria-busy', 'true');
     const fallo = e => { btn.textContent = txt; btn.removeAttribute('aria-busy'); if (msg) msg.textContent = e || 'No pudimos abrir el pago. Intente de nuevo o llámenos al +56 9 4153 1025.'; };
-    fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'pagar', producto }) })
+    fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'pagar', producto, origen: (typeof origen === 'string' ? origen : '') }) })
       .then(r => r.json()).then(d => { if (d.ok && /^https:\/\/(www\.)?mercadopago\.cl\//.test(d.url)) location.href = d.url; else fallo(d.error); }, () => fallo());
   }
   function dx(){
