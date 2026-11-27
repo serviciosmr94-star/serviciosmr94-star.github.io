@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-4CQxZlLN3qQQPnm0/tgQWajVfuAUh7H0C6S8eVRKUgc='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-SgK4Br3RMfXt5fczH6eaZjO81gcK8ofCUXQJUUxYjCA='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
@@ -24,6 +24,8 @@ input,textarea{font:inherit;font-size:16px;color:var(--text);border:1px solid va
 .btn{display:inline-flex;justify-content:center;font:600 16px system-ui,sans-serif;padding:14px 22px;border-radius:8px;border:0;background:var(--mag);color:#fff;cursor:pointer;width:100%}
 .btn[disabled]{opacity:.6;cursor:default}.msg{font-weight:600;margin:12px 0 0}.msg.err{color:var(--mag)}.ok{border-color:var(--ok)}.ok h2{color:var(--ok);margin-top:0}
 [hidden]{display:none!important}
+fieldset.doc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 14px}fieldset.doc legend{font-size:13px;font-weight:600;color:var(--muted);padding:0 6px}
+.tipos{display:flex;gap:18px;margin:0 0 6px}label.op{flex-direction:row;align-items:center;gap:8px;font-size:15px;color:var(--text);margin:0}label.op input{width:auto;accent-color:var(--turq)}
 </style>
 </head>
 <body>
@@ -40,6 +42,11 @@ input,textarea{font:inherit;font-size:16px;color:var(--text);border:1px solid va
       <label>Correo (le llega la confirmación al calendario)<input id="mail" type="email" autocomplete="email" maxlength="80"></label>
       <label id="lDir">Dirección y comuna<input id="dir" autocomplete="street-address" maxlength="160"></label>
       <label>Algo que debamos saber (opcional)<textarea id="det" rows="2" maxlength="500"></textarea></label>
+      <fieldset class="doc"><legend>¿Boleta o factura?</legend>
+        <div class="tipos"><label class="op"><input type="radio" name="doc" value="boleta" checked> Boleta</label><label class="op"><input type="radio" name="doc" value="factura"> Factura</label></div>
+        <div id="datFac" hidden><div class="fila"><label>RUT de la empresa<input id="frut" maxlength="12" placeholder="76.123.456-7" autocomplete="off"></label><label>Razón social<input id="frs" maxlength="100" autocomplete="organization"></label></div>
+        <label>Giro<input id="fgiro" maxlength="80"></label></div>
+      </fieldset>
       <button class="btn" id="btn" type="submit">Confirmar hora</button><p class="msg" id="msg" role="status"></p>
     </div>
   </form>
@@ -73,15 +80,23 @@ input,textarea{font:inherit;font-size:16px;color:var(--text);border:1px solid va
     });
     $('f').hidden = false;
   }, () => error('No pudimos revisar el pago. Recargue la página en un momento o llámenos al +56 9 4153 1025.'));
+  // v12.35: boleta o factura (Mercado Pago no emite el documento de MR: Iván lo emite con estos datos)
+  const esFac = () => (document.querySelector('input[name=doc]:checked') || {}).value === 'factura';
+  document.querySelectorAll('input[name=doc]').forEach(r => r.addEventListener('change', () => { $('datFac').hidden = !esFac(); }));
+  const rutOk = r => { const m = String(r).replace(/[.\s]/g, '').toUpperCase().match(/^(\d{7,8})-?([\dK])$/); if (!m) return false;
+    let s = 0, k = 2; for (let i = m[1].length - 1; i >= 0; i--) { s += Number(m[1][i]) * k; k = k === 7 ? 2 : k + 1; }
+    const dv = 11 - (s % 11); return (dv === 11 ? '0' : dv === 10 ? 'K' : String(dv)) === m[2]; };
   $('f').addEventListener('submit', ev => {
     ev.preventDefault();
     const v = id => $(id).value.trim(), m = $('msg'); m.className = 'msg err';
     if (!elegida) { m.textContent = 'Elija un día y hora.'; return; }
     if (!v('nom') || !v('tel')) { m.textContent = 'Indique su nombre y teléfono.'; return; }
     if (!/retiro/.test(clase) && !v('dir')) { m.textContent = 'Indique la dirección y comuna.'; return; }
+    if (esFac() && (!rutOk(v('frut')) || !v('frs') || !v('fgiro'))) { m.textContent = 'Para la factura indique un RUT válido, la razón social y el giro.'; return; }
     const btn = $('btn'); btn.disabled = true; btn.textContent = 'Agendando…';
     fetch(PA, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ accion: 'agendar', ref,
-      inicio: elegida, nombre: v('nom'), telefono: v('tel'), correo: v('mail'), direccion: v('dir'), detalle: v('det') }) })
+      inicio: elegida, nombre: v('nom'), telefono: v('tel'), correo: v('mail'), direccion: v('dir'), detalle: v('det'),
+      documento: esFac() ? 'factura' : 'boleta', rut: esFac() ? v('frut') : '', razon: esFac() ? v('frs') : '', giro: esFac() ? v('fgiro') : '' }) })
       .then(r => r.json()).then(d => {
         if (!d.ok) { m.textContent = d.error || 'No se pudo agendar.'; btn.disabled = false; btn.textContent = 'Confirmar hora'; return; }
         $('f').hidden = true; $('tit').textContent = 'Listo, quedó agendado'; $('sub').textContent = d.producto;
