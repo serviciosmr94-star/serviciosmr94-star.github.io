@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QMHHPiFxWNJbAPnzA+KgLc7Y+z0Psv7FrRJG5bPmUZc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-khZ8LIweTxTSBz7HNduKkwuY5OLiAQRQ8P3s8zRm4Rs='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -169,6 +169,8 @@ section.s>.in{display:flex;flex-direction:column;gap:30px}
 .btu .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .btu output{display:block;font:700 38px/1.05 var(--f-disp);color:var(--turq);font-variant-numeric:tabular-nums}
 .btu small{color:var(--muted);font-size:13px}
+.eq.sel{outline:3px solid var(--turq);outline-offset:4px;border-radius:14px}
+.btu .btn[hidden]{display:none}
 .lista{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px}
 .lista li{display:grid;grid-template-columns:26px 1fr;gap:12px}
 .lista svg{width:22px;height:22px;color:var(--ok);margin-top:2px}
@@ -558,13 +560,13 @@ form.cot label.chk input{width:16px;height:16px;flex:0 0 16px;padding:0;margin:0
         <div class="btu" aria-live="polite">
           <h3>Calculadora de referencia</h3>
           <div class="row">
-            <label for="m2">Superficie (m²)<input id="m2" type="number" min="5" max="300" step="1" value="20"></label>
+            <label for="m2">Superficie (m²)<input id="m2" type="number" inputmode="numeric" min="1" max="300" step="1" value="" placeholder="0"></label>
             <label for="uso">Tipo de recinto<select id="uso"><option value="600">Dormitorio</option><option value="650" selected>Living u oficina</option><option value="750">Local con público</option><option value="800">Cocina o sala de equipos</option></select></label>
           </div>
           <label for="sol">Sol directo en la tarde<select id="sol"><option value="1">No</option><option value="1.15">Sí</option></select></label>
-          <div><output id="btuOut">13.000 BTU</output><small id="btuEq">Referencia: equipo de 12.000 BTU</small></div>
+          <div><output id="btuOut">0 BTU</output><small id="btuEq">Escriba la superficie del recinto para ver el equipo recomendado.</small></div>
           <small>Estimación por superficie. En la visita se evalúan altura, superficie vidriada, ocupación y carga térmica de equipos.</small>
-          <a class="btn btn-p" id="btuCot" href="#cotizar">Cotizar este equipo</a>
+          <a class="btn btn-p" id="btuCot" href="#cotizar" hidden>Cotizar este equipo</a>
         </div>
         <ul class="lista">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><div><b>Técnicos con más de 30 años de experiencia en el rubro</b><span>Las líneas de refrigerante y la carga del equipo las maneja personal con experiencia en climatización.</span></div></li>
@@ -802,20 +804,43 @@ form.cot label.chk input{width:16px;height:16px;flex:0 0 16px;padding:0;margin:0
   if (okPA) cupones.forEach(c => { c.hidden = false;
     c.querySelector('.cupon-b').addEventListener('click', () => aplicarCupon(c));
     c.querySelector('.cupon-c').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); aplicarCupon(c); } }); });
-  // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol
+  // calculadora de referencia: BTU/h ~ m² x factor del recinto x sol (27-11: parte en 0, redondea hacia ARRIBA y nunca recomienda un equipo más chico)
   const EQ = [9000, 12000, 18000, 24000, 36000, 48000, 60000];
   const fmt = n => n.toLocaleString('es-CL');
-  let btuTxt = '';
+  let btuTxt = '', btuEqSel = '';
   function calc(){
-    const m2 = Math.max(0, Number($('m2').value) || 0);
-    const btu = Math.round(m2 * Number($('uso').value) * Number($('sol').value) / 500) * 500;
-    const eq = EQ.find(e => e >= btu * 0.95) || null;
-    $('btuOut').textContent = fmt(btu) + ' BTU';
-    $('btuEq').textContent = eq ? 'Referencia: equipo de ' + fmt(eq) + ' BTU' : 'Sobre 60.000 BTU se recomienda más de un equipo o un sistema central; se evalúa en la visita técnica.';
-    btuTxt = 'Recinto de ' + m2 + ' m² (' + $('uso').selectedOptions[0].text.toLowerCase() + '). La calculadora dio ' + fmt(btu) + ' BTU.';
+    const m2 = Math.floor(Number($('m2').value) || 0), out = $('btuOut'), info = $('btuEq'), bt = $('btuCot');
+    btuEqSel = '';
+    if (m2 <= 0) { out.textContent = '0 BTU'; info.textContent = 'Escriba la superficie del recinto para ver el equipo recomendado.'; bt.hidden = true; return; }
+    if (m2 > 300) { out.textContent = 'Más de 300 m²'; info.textContent = 'Para recintos de más de 300 m² la capacidad se calcula en la visita técnica.';
+      btuTxt = 'Recinto de ' + m2 + ' m². Necesito evaluar la capacidad en una visita.'; bt.textContent = 'Cotizar'; bt.href = '#cotizar'; bt.hidden = false; return; }
+    const btu = Math.ceil(m2 * Number($('uso').value) * Number($('sol').value) / 500) * 500;
+    const eq = EQ.find(e => e >= btu) || null;
+    out.textContent = fmt(btu) + ' BTU';
+    btuTxt = 'Recinto de ' + m2 + ' m² (' + $('uso').selectedOptions[0].text.toLowerCase() + ($('sol').value !== '1' ? ', con sol directo en la tarde' : '') + '). La calculadora dio ' + fmt(btu) + ' BTU';
+    const k = eq ? fmt(eq) : '';
+    if (eq && EQP[k]) {          // 9.000, 12.000 o 18.000: hay un Clark con precio y pago en línea
+      btuEqSel = k;
+      info.textContent = 'Recomendado: Clark ' + k + ' BTU instalado, ' + fmt$(EQP[k] + 100000) + ' IVA incluido.';
+      bt.textContent = 'Ver Clark ' + k + ' BTU'; bt.href = '#equipos';
+    } else if (eq) {
+      info.textContent = 'Referencia: equipo de ' + k + ' BTU. Esta capacidad se cotiza.';
+      bt.textContent = 'Cotizar equipo de ' + k + ' BTU'; bt.href = '#cotizar'; btuTxt += ' (equipo de ' + k + ' BTU)';
+    } else {
+      info.textContent = 'Sobre 60.000 BTU se recomienda más de un equipo o un sistema central; se evalúa en la visita técnica.';
+      bt.textContent = 'Cotizar'; bt.href = '#cotizar';
+    }
+    btuTxt += '.'; bt.hidden = false;
   }
-  ['m2', 'uso', 'sol'].forEach(id => $(id).addEventListener('input', calc)); calc();
-  $('btuCot').addEventListener('click', () => { const s = $('cSer'); s.value = 'Suministro de equipo de aire acondicionado'; $('cMsg').value = btuTxt; setTimeout(() => $('cNom').focus({preventScroll:true}), 400); });
+  ['m2', 'uso', 'sol'].forEach(id => { $(id).addEventListener('input', calc); $(id).addEventListener('change', calc); }); calc();
+  $('btuCot').addEventListener('click', ev => {
+    if (btuEqSel) {               // lleva a la tarjeta del Clark recomendado y la marca
+      const a = document.querySelector('[data-eq-ins="' + btuEqSel + '"]'), card = a && a.closest('.eq');
+      if (card) { ev.preventDefault(); document.querySelectorAll('.eq.sel').forEach(x => x.classList.remove('sel')); card.classList.add('sel');
+        card.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center'}); return; }
+    }
+    const s = $('cSer'); s.value = 'Suministro de equipo de aire acondicionado'; $('cMsg').value = btuTxt; setTimeout(() => $('cNom').focus({preventScroll:true}), 400);
+  });
   // origen del cliente (sin código de terceros): gclid/utm del anuncio o buscador de donde vino; se guarda solo en esta pestaña
   const origen = (() => {
     try {
