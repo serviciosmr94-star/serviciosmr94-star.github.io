@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-GOtuc4B8Euc73uKTmXNxhTj6VwOtdbo192LvRhAIRFg='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-QMHHPiFxWNJbAPnzA+KgLc7Y+z0Psv7FrRJG5bPmUZc='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self' https://script.google.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="only light">
@@ -424,6 +424,12 @@ s.antes{opacity:.7;font-weight:400;margin-left:6px}
 .retracto{margin:6px 0 14px;padding:12px 14px;border-left:3px solid var(--turq);background:var(--turq-soft);border-radius:0 10px 10px 0;font-size:14px;line-height:1.55;color:var(--text)}
 .retracto p{margin:4px 0 0;color:var(--text)}.retracto small{color:var(--muted)}
 .dx .retracto{background:rgba(255,255,255,.08);border-left-color:#7fd8e6;color:var(--on-ink)}.dx .retracto p{color:var(--on-ink-mut)}.dx .retracto small{color:var(--on-ink-mut)}
+/* v12.35: otros servicios en la misma solicitud */
+.otros-serv summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--turq)}
+.otros-serv .chks{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin-top:8px}
+@media (max-width:440px){.otros-serv .chks{grid-template-columns:1fr}}
+form.cot label.chk{flex-direction:row;align-items:center;gap:7px;font-weight:500;font-size:13.5px;color:var(--text)}
+form.cot label.chk input{width:16px;height:16px;flex:0 0 16px;padding:0;margin:0;accent-color:var(--turq)}
 </style>
 </head>
 <body>
@@ -470,7 +476,7 @@ s.antes{opacity:.7;font-weight:400;margin-left:6px}
           <div><h2>Solicite su cotización</h2><p class="sol-resp"><i aria-hidden="true"></i>Respondemos dentro del día hábil</p></div>
         </div>
         <div class="sol-cuerpo">
-        <p class="sub">Por teléfono o correo; lo recibido en fin de semana o feriado, el día hábil siguiente. ¿Varios servicios? Elija el principal y cuéntenos el resto en «Describa su requerimiento». <b>Diagnóstico Express y equipos Clark</b> no necesitan cotización: se pagan y agendan en línea.</p>
+        <p class="sub">Por teléfono o correo; lo recibido en fin de semana o feriado, el día hábil siguiente. ¿Varios servicios? Elija el principal y marque los demás en «¿Necesita además otros servicios?». <b>Diagnóstico Express y equipos Clark</b> no necesitan cotización: se pagan y agendan en línea.</p>
         <form class="cot" id="cot" novalidate>
           <label for="cNom">Nombre<input id="cNom" autocomplete="name" maxlength="80" required></label>
           <label for="cEmp">Empresa (opcional)<input id="cEmp" autocomplete="organization" maxlength="80"></label>
@@ -479,7 +485,8 @@ s.antes{opacity:.7;font-weight:400;margin-left:6px}
           <label for="cCom">Comuna o ciudad<input id="cCom" maxlength="60" required></label>
           <label for="cTipo">Tipo de cliente<select id="cTipo"><option>Empresa o industria</option><option>Local comercial</option><option>Vivienda</option></select></label>
           <label for="cTab">N° de tableros (opcional)<input id="cTab" type="number" inputmode="numeric" min="1" max="999" placeholder="Ej.: 2"></label>
-          <label for="cSer">Servicio<select id="cSer"><option>Mantención de tableros</option><option>Plan de mantención para empresas</option><option>Reposición o normalización de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Suministro de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y declaración TE1</option><option>Otro</option></select></label>
+          <label for="cSer">Servicio principal<select id="cSer"><option>Mantención de tableros</option><option>Plan de mantención para empresas</option><option>Reposición o normalización de tablero</option><option>Termografía</option><option>Instalación de aire acondicionado</option><option>Suministro de equipo de aire acondicionado</option><option>Diagnóstico Express</option><option>Regularización y declaración TE1</option><option>Otro</option></select></label>
+          <details class="full otros-serv" id="cOtros"><summary>¿Necesita además otros servicios? (opcional)</summary><div class="chks"><label class="chk"><input type="checkbox" value="Mantención de tableros"> Mantención de tableros</label><label class="chk"><input type="checkbox" value="Plan de mantención para empresas"> Plan de mantención para empresas</label><label class="chk"><input type="checkbox" value="Reposición o normalización de tablero"> Reposición o normalización de tablero</label><label class="chk"><input type="checkbox" value="Termografía"> Termografía</label><label class="chk"><input type="checkbox" value="Instalación de aire acondicionado"> Instalación de aire acondicionado</label><label class="chk"><input type="checkbox" value="Suministro de equipo de aire acondicionado"> Suministro de equipo de aire acondicionado</label><label class="chk"><input type="checkbox" value="Diagnóstico Express"> Diagnóstico Express</label><label class="chk"><input type="checkbox" value="Regularización y declaración TE1"> Regularización y declaración TE1</label><label class="chk"><input type="checkbox" value="Mantención de aire acondicionado"> Mantención de aire acondicionado</label></div></details>
           <label class="full" for="cMsg">Describa su requerimiento<textarea id="cMsg" maxlength="1000" placeholder="Ej.: tablero de una bodega de 400 m²; las protecciones operan en horario de tarde."></textarea></label>
           <input type="text" id="cWeb" name="web_sitio" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
           <label class="acep" for="cAcep"><input type="checkbox" id="cAcep"><span>Acepto que Servicios MR use mis datos para responder y dar seguimiento a esta solicitud, según el <a href="privacidad.html">aviso de privacidad</a>.</span></label>
@@ -892,7 +899,8 @@ s.antes{opacity:.7;font-weight:400;margin-left:6px}
     if (v('cMail') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('cMail'))) { out.textContent = 'Revise el correo: parece incompleto.'; return; }
     if (!$('cAcep').checked) { out.textContent = 'Para enviar, marque la casilla de aceptación del aviso de privacidad.'; return; }
     const nTab = Math.min(999, Math.max(0, parseInt(v('cTab'), 10) || 0));
-    const ficha = 'Tipo de cliente: ' + v('cTipo') + (nTab ? ' · N° de tableros: ' + nTab : '') + ' · Aceptó el aviso de privacidad.' + (origen ? ' · Llegó por: ' + origen : '');
+    const otros = [...document.querySelectorAll('#cOtros input:checked')].map(c => c.value).filter(x => x !== v('cSer'));   // v12.35: varios servicios en UNA solicitud
+    const ficha = 'Tipo de cliente: ' + v('cTipo') + (otros.length ? ' · También necesita: ' + otros.join(', ') : '') + (nTab ? ' · N° de tableros: ' + nTab : '') + ' · Aceptó el aviso de privacidad.' + (origen ? ' · Llegó por: ' + origen : '');
     const msj = (ficha + (v('cMsg') ? '\n' + v('cMsg') : '')).slice(0, 1000);
     const btn = $('cBtn'); btn.disabled = true; btn.textContent = 'Enviando…';
     const datos = new URLSearchParams({ nombre: v('cNom'), empresa: v('cEmp'), comuna: v('cCom'), servicio: v('cSer'), telefono: v('cTel'), correo: v('cMail'), mensaje: msj, origen: 'formulario', web_sitio: v('cWeb') });
