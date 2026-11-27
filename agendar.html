@@ -2,7 +2,7 @@
 <html lang="es-CL">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-SgK4Br3RMfXt5fczH6eaZjO81gcK8ofCUXQJUUxYjCA='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-V7iVwMdAjtTT8CcRTv9bUMs4rdCprMbfycG8JBKHVeE='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; form-action 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
@@ -50,7 +50,7 @@ fieldset.doc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;m
       <button class="btn" id="btn" type="submit">Confirmar hora</button><p class="msg" id="msg" role="status"></p>
     </div>
   </form>
-  <div class="caja ok" id="listo" hidden><h2>Hora confirmada</h2><p id="listoTxt"></p><p>Si necesita cambiarla, llámenos al <a href="tel:+56941531025">+56 9 4153 1025</a>.</p></div>
+  <div class="caja ok" id="listo" hidden><h2>Hora confirmada</h2><p id="listoTxt"></p><p id="condTxt" style="font-size:14px;color:var(--muted)" hidden></p><p>Si necesita cambiarla, llámenos al <a href="tel:+56941531025">+56 9 4153 1025</a>.</p></div>
 </main>
 <script>
 (function(){
@@ -101,6 +101,7 @@ fieldset.doc{border:1px solid var(--line);border-radius:10px;padding:12px 14px;m
         if (!d.ok) { m.textContent = d.error || 'No se pudo agendar.'; btn.disabled = false; btn.textContent = 'Confirmar hora'; return; }
         $('f').hidden = true; $('tit').textContent = 'Listo, quedó agendado'; $('sub').textContent = d.producto;
         $('listoTxt').textContent = d.cita; $('listo').hidden = false;
+        if (d.condiciones) { $('condTxt').textContent = 'Si se arrepiente de su compra: ' + d.condiciones; $('condTxt').hidden = false; }
       }, () => { m.textContent = 'No se pudo agendar. Intente de nuevo o llámenos al +56 9 4153 1025.'; btn.disabled = false; btn.textContent = 'Confirmar hora'; });
   });
 })();

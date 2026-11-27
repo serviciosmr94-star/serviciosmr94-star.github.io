@@ -420,6 +420,10 @@ body[data-modo] .solo-todo,body:not([data-modo]) #simple p[data-para]{display:no
 .dx .cupon-m.si{color:#5fe0a6}.dx .cupon-m.no{color:#ff9aa9}
 .eqs .cupon{margin:10px 0 16px}
 s.antes{opacity:.7;font-weight:400;margin-left:6px}
+/* v12.35: arrepentimiento visible antes de pagar (Ley 19.496 art. 3 bis b) */
+.retracto{margin:6px 0 14px;padding:12px 14px;border-left:3px solid var(--turq);background:var(--turq-soft);border-radius:0 10px 10px 0;font-size:14px;line-height:1.55;color:var(--text)}
+.retracto p{margin:4px 0 0;color:var(--text)}.retracto small{color:var(--muted)}
+.dx .retracto{background:rgba(255,255,255,.08);border-left-color:#7fd8e6;color:var(--on-ink)}.dx .retracto p{color:var(--on-ink-mut)}.dx .retracto small{color:var(--on-ink-mut)}
 </style>
 </head>
 <body>
@@ -569,6 +573,7 @@ s.antes{opacity:.7;font-weight:400;margin-left:6px}
         <p>Precios del Paquete verano, válidos hasta el 28-02-2027. Si no sabe qué capacidad necesita, use la calculadora de arriba.</p><p class="eq-conf">La misma empresa que mantiene tableros eléctricos de plantas industriales instala su equipo en su casa u oficina: técnicos con licencia SEC, circuito exclusivo según la normativa, garantía por escrito y factura o boleta.</p></div></div>
         <label class="eq-ent" for="eqEnt">Si compra solo el equipo, ¿cómo lo recibe?<select id="eqEnt"><option value="r">Retiro en Pudahuel, sin costo</option><option value="d">Despacho en la Región Metropolitana: $20.000</option></select></label>
         <details class="cupon" hidden><summary>¿Tiene un código de descuento?</summary><div class="cupon-in"><input class="cupon-c" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej.: MR-7KQ4-PX9D" aria-label="Código de descuento"><button type="button" class="btn btn-s cupon-b">Aplicar</button></div><p class="cupon-m" role="status"></p></details>
+        <div class="retracto"><b>Si se arrepiente de su compra (equipo instalado)</b><p>Puede anular su compra en cualquier momento antes de la instalación. Avísenos por correo o por teléfono y le devolvemos el total pagado, por el mismo medio de pago, dentro de 10 días hábiles. Si prefiere cambiar la fecha, la reagendamos sin costo. Una vez instalado el equipo, la instalación ya está prestada. Aun así, tiene 10 días desde la instalación para arrepentirse del equipo: lo retiramos sin costo para usted y le devolvemos el valor del equipo, descontando $100.000 por la instalación ya realizada. El equipo debe estar en buen estado y con su caja, manuales y certificado de garantía, así que le recomendamos guardarlos. Garantía: 6 meses el equipo (garantía legal) y 3 meses la mano de obra, por escrito. <small>(Ley 19.496, art. 3 bis letra b, y arts. 21 y 41.)</small></p></div>
         <div class="eq-grid">
           <article class="eq">
             <h4>Clark 9.000 BTU</h4>
@@ -610,6 +615,7 @@ s.antes{opacity:.7;font-weight:400;margin-left:6px}
           <div class="pasos" id="pasosDx">
             <div class="paso"><span>PASO 1</span><label for="dxN">Tableros a revisar <select id="dxN"><option value="1">1 tablero</option><option value="2">2 tableros</option><option value="3">3 tableros</option><option value="4">4 o más</option></select></label><b class="total" id="dxTotal">Total: $77.350 IVA incluido</b></div>
             <details class="cupon" hidden><summary>¿Tiene un código de descuento?</summary><div class="cupon-in"><input class="cupon-c" maxlength="24" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ej.: MR-7KQ4-PX9D" aria-label="Código de descuento"><button type="button" class="btn btn-s cupon-b">Aplicar</button></div><p class="cupon-m" role="status"></p></details>
+            <div class="retracto"><b>Si se arrepiente de su compra</b><p>Puede anular el Diagnóstico Express dentro de 10 días desde el pago, siempre que la visita no se haya realizado. Avísenos por correo o por teléfono y le devolvemos el total pagado, por el mismo medio de pago, dentro de 10 días hábiles. Pasado ese plazo, si la visita aún no se realiza, la reagendamos sin costo. <small>(Ley 19.496, art. 3 bis letra b.)</small></p></div>
             <div class="paso"><span>PASO 2</span><a class="btn btn-p" id="btnPago" href="#cotizar">Pagar con Mercado Pago</a></div>
             <div class="paso"><span>PASO 3</span><b class="total">Con el pago aprobado, elija día y hora</b></div>
           </div>
